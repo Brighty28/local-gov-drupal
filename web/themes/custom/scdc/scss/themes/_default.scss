@@ -1,11 +1,9 @@
 // ==========================================================================
-// Default theme
+// Default theme - SCDC brand colour overrides
 // ==========================================================================
 
-// This file contains the default theme colour application.
-// Additional themes (e.g. high-contrast) can be added as siblings.
-
-.scdc-theme {
+// Override localgov_base CSS custom properties with SCDC branding
+:root {
   --color-primary: #{$color-primary};
   --color-primary-light: #{$color-primary-light};
   --color-primary-dark: #{$color-primary-dark};
@@ -17,4 +15,14 @@
   --color-text: #{$color-black};
   --color-text-muted: #{$color-grey};
   --color-border: #{$color-grey-light};
+
+  // localgov_base specific custom properties
+  --color-brand: #{$color-primary};
+  --color-brand-light: #{$color-primary-light};
+  --color-brand-dark: #{$color-primary-dark};
+}
+
+.scdc-theme {
+  --color-primary: #{$color-primary};
+  --color-brand: #{$color-primary};
 }
