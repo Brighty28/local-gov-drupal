@@ -1,0 +1,10 @@
+name: SCDC Theme
+type: theme
+description: 'Custom SCDC theme for my LocalGov site'
+core_version_requirement: ^10
+base theme: stable9
+
+regions:
+  header: Header
+  content: Content
+  footer: Footer
