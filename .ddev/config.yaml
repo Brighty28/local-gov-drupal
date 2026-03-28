@@ -5,7 +5,7 @@ php_version: "8.3"
 webserver_type: nginx-fpm
 database:
   type: mariadb
-  version: "10.11"
+  version: "11.8"
 nodejs_version: "18"
 composer_version: "2"
 web_environment:
