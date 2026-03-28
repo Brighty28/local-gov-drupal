@@ -13,21 +13,12 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class LocalisationController extends ControllerBase {
 
-  /**
-   * The localisation API client.
-   */
   protected LocalisationApiClient $apiClient;
 
-  /**
-   * Constructs a LocalisationController.
-   */
   public function __construct(LocalisationApiClient $api_client) {
     $this->apiClient = $api_client;
   }
 
-  /**
-   * {@inheritdoc}
-   */
   public static function create(ContainerInterface $container): static {
     return new static(
       $container->get('localgov_localisation.api_client'),
@@ -61,10 +52,11 @@ class LocalisationController extends ControllerBase {
   }
 
   /**
-   * AJAX endpoint: combined localisation search.
+   * AJAX: combined localisation search via /api/v1/Localisations/{postcode}.
    */
-  public function ajaxSearch(string $postcode): JsonResponse {
-    $data = $this->apiClient->localise($postcode);
+  public function ajaxSearch(string $postcode, Request $request): JsonResponse {
+    $premise_id = $request->query->get('premiseId');
+    $data = $this->apiClient->localise($postcode, $premise_id);
     if ($data === NULL) {
       return new JsonResponse([
         'error' => 'Unable to retrieve data for this postcode.',
@@ -74,10 +66,10 @@ class LocalisationController extends ControllerBase {
   }
 
   /**
-   * AJAX endpoint: address lookup.
+   * AJAX: address lookup via /api/v1/Addresses/PostcodeSearch/{postcode}.
    */
   public function addressLookup(string $postcode): JsonResponse {
-    $data = $this->apiClient->addressLookup($postcode);
+    $data = $this->apiClient->addressPostcodeSearch($postcode);
     if ($data === NULL) {
       return new JsonResponse(['error' => 'Address lookup failed.'], 503);
     }
@@ -85,10 +77,13 @@ class LocalisationController extends ControllerBase {
   }
 
   /**
-   * AJAX endpoint: bin collections.
+   * AJAX: bin collections via /api/v1/Collections/Search/{premiseId}.
    */
-  public function collections(string $premiseId): JsonResponse {
-    $data = $this->apiClient->binCollections($premiseId);
+  public function collections(string $premiseId, Request $request): JsonResponse {
+    $num = (int) $request->query->get('numberOfCollections', 999);
+    $date = $request->query->get('date');
+    $include_events = (bool) $request->query->get('includeBinEvents', FALSE);
+    $data = $this->apiClient->collections($premiseId, $num, $date, $include_events);
     if ($data === NULL) {
       return new JsonResponse(['error' => 'Collection lookup failed.'], 503);
     }
@@ -96,10 +91,10 @@ class LocalisationController extends ControllerBase {
   }
 
   /**
-   * AJAX endpoint: councillors.
+   * AJAX: councillors via /api/v1/ModernGov/GetCouncillors/{postcode}.
    */
   public function councillors(string $postcode): JsonResponse {
-    $data = $this->apiClient->councillors($postcode);
+    $data = $this->apiClient->councillorsByPostcode($postcode);
     if ($data === NULL) {
       return new JsonResponse(['error' => 'Councillor lookup failed.'], 503);
     }
@@ -107,12 +102,14 @@ class LocalisationController extends ControllerBase {
   }
 
   /**
-   * AJAX endpoint: planning applications.
+   * AJAX: planning via /api/v1/Planning/ApplicationByPostcode/{postcode}.
    */
-  public function planning(string $postcode): JsonResponse {
-    $config = $this->config('localgov_localisation.settings');
-    $radius = $config->get('default_radius_planning') ?? 2;
-    $data = $this->apiClient->planningApplications($postcode, $radius);
+  public function planning(string $postcode, Request $request): JsonResponse {
+    $radius = $request->query->get('radius');
+    $data = $this->apiClient->planningByPostcode(
+      $postcode,
+      $radius ? (float) $radius : NULL,
+    );
     if ($data === NULL) {
       return new JsonResponse(['error' => 'Planning lookup failed.'], 503);
     }

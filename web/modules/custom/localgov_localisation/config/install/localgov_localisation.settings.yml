@@ -10,6 +10,7 @@ enabled_services:
   addresses: true
   collections: true
   councillors: true
+  meetings: true
   planning: true
   planning_constraints: true
   events: true

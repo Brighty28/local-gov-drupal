@@ -7,7 +7,7 @@ localgov_localisation.settings:
   requirements:
     _permission: 'administer localgov localisation'
 
-# Postcode search page
+# "In my area" postcode search page
 localgov_localisation.search:
   path: '/in-my-area'
   defaults:
@@ -16,7 +16,7 @@ localgov_localisation.search:
   requirements:
     _permission: 'access content'
 
-# AJAX endpoint for postcode lookup
+# AJAX: combined localisation → /api/v1/Localisations/{postcode}
 localgov_localisation.ajax_search:
   path: '/api/localisation/search/{postcode}'
   defaults:
@@ -27,7 +27,7 @@ localgov_localisation.ajax_search:
   options:
     no_cache: TRUE
 
-# Address lookup endpoint
+# AJAX: addresses → /api/v1/Addresses/PostcodeSearch/{postcode}
 localgov_localisation.address_lookup:
   path: '/api/localisation/addresses/{postcode}'
   defaults:
@@ -38,7 +38,7 @@ localgov_localisation.address_lookup:
   options:
     no_cache: TRUE
 
-# Bin collections endpoint
+# AJAX: bin collections → /api/v1/Collections/Search/{premiseId}
 localgov_localisation.collections:
   path: '/api/localisation/collections/{premiseId}'
   defaults:
@@ -48,7 +48,7 @@ localgov_localisation.collections:
   options:
     no_cache: TRUE
 
-# Councillors endpoint
+# AJAX: councillors → /api/v1/ModernGov/GetCouncillors/{postcode}
 localgov_localisation.councillors:
   path: '/api/localisation/councillors/{postcode}'
   defaults:
@@ -59,7 +59,7 @@ localgov_localisation.councillors:
   options:
     no_cache: TRUE
 
-# Planning endpoint
+# AJAX: planning → /api/v1/Planning/ApplicationByPostcode/{postcode}
 localgov_localisation.planning:
   path: '/api/localisation/planning/{postcode}'
   defaults:

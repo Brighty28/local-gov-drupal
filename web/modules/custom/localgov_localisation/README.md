@@ -6,74 +6,120 @@ A Drupal module providing postcode-based localisation services for UK local auth
 
 Enter a postcode, get personalised local information:
 
-- **Address Lookup** — Find addresses by postcode or UPRN
-- **Bin Collections** — Next collection dates by premise
-- **Your Councillors** — Local councillors by ward/postcode
-- **Planning Applications** — Nearby planning apps with status
+- **Address Lookup** — Find addresses by postcode or UPRN (via Alloy or OS Data Hub)
+- **Geocoding** — Get lat/lng for a postcode
+- **Bin Collections** — Next collection dates by premise ID
+- **Councillors** — Local councillors by postcode or ward (via ModernGov)
+- **Council Meetings** — Upcoming meetings filtered by authority (via ModernGov)
+- **Planning Applications** — Nearby planning apps by postcode or UPRN
 - **Planning Constraints** — Listed buildings, TPOs, conservation areas, flood zones
-- **Local Events** — Events near a postcode
-- **Democracy / Elections** — Upcoming elections via Democracy Club
-- **Combined Search** — All of the above in one postcode lookup
+- **Local Events** — Events near a postcode by radius
+- **Democracy / Elections** — Upcoming elections via Democracy Club (by postcode or UPRN)
+- **Combined Localisation** — All of the above in one postcode lookup
+
+## API Endpoint Mapping
+
+The module maps to the following Localisation API endpoints (OpenAPI 3.0.4 spec):
+
+| Drupal method | API endpoint | Parameters |
+|--------------|-------------|------------|
+| `addressPostcodeSearch()` | `GET /api/v1/Addresses/PostcodeSearch/{postcode}` | `?source=Alloy\|OSData` |
+| `addressUprnSearch()` | `GET /api/v1/Addresses/UprnSearch/{uprn}` | `?source=Alloy\|OSData` |
+| `geocode()` | `GET /api/v1/Addresses/Geocode/{postcode}` | |
+| `collections()` | `GET /api/v1/Collections/Search/{premiseId}` | `?numberOfCollections=999&date=&includeBinEvents=false` |
+| `democracyByPostcode()` | `GET /api/v1/DemocracyClubs/Postcode/{postcode}` | |
+| `democracyByUprn()` | `GET /api/v1/DemocracyClubs/UPRN/{uprn}` | |
+| `events()` | `GET /api/v1/Events/{postcode}` | `?radius=5` |
+| `localise()` | `GET /api/v1/Localisations/{postcode}` | `?premiseId=&RadiusEvents=5&RadiusPlanning=2` |
+| `councillorsByPostcode()` | `GET /api/v1/ModernGov/GetCouncillors/{postcode}` | |
+| `councillorsByWard()` | `GET /api/v1/ModernGov/GetWardCouncillors/{ward}` | |
+| `meetings()` | `GET /api/v1/ModernGov/GetEvents/{numberOfMonths}` | `?numberOfEvents=0&authoritySource=SCDC\|CCC\|All&excludeEventTitles=` |
+| `planningByPostcode()` | `GET /api/v1/Planning/ApplicationByPostcode/{postcode}` | `?radius=5` |
+| `planningByUprn()` | `GET /api/v1/Planning/ApplicationByUPRN/{uprn}` | `?radius=5` |
+| `planningConstraints()` | `GET /api/v1/PlanningConstraints/{postcode}` | `?premiseId=&radiusPlanning=1&radiusListedBuilding=5&radiusConservationAreas=5&radiusTreePreservationOrder=5&radiusFloodZone=5&area=&reference=` |
+| `listedBuildings()` | `GET /api/v1/PlanningConstraints/Get-Listed-Buildings/{postcode}` | `?radius=5&area=&reference=` |
+| `treePreservation()` | `GET /api/v1/PlanningConstraints/Get-Tree-Preservation/{postcode}` | `?premiseId=&radius=5&area=&reference=` |
+| `conservationAreas()` | `GET /api/v1/PlanningConstraints/Get-Conservation-Area/{postcode}` | `?premiseId=&radius=5&area=&reference=` |
+| `floodZones()` | `GET /api/v1/PlanningConstraints/Get-Flood-Zone/{postcode}` | `?premiseId=&radius=5&area=&reference=` |
+
+### API Enums
+
+**AddressSource:** `Alloy` | `OSData`
+**AuthoritySource:** `SCDC` | `CCC` | `All`
 
 ## Installation
 
 ```bash
-# Enable the module
 ddev drush en localgov_localisation -y
 ddev drush cr
 ```
 
 ## Configuration
 
-1. Go to **Admin > Configuration > Web services > LocalGov Localisation**
-2. Enter your **API Base URL** (e.g. `https://localisationapi.azurewebsites.net`)
-3. Enter your **API Key** if required
-4. Set your **Authority Identifier** (e.g. `SCDC`, `CCC`)
-5. Toggle which services are enabled
-6. Adjust cache lifetime and search radii
+Go to **Admin > Configuration > Web services > LocalGov Localisation**:
+
+- **API Base URL** — e.g. `https://localisationapi.azurewebsites.net`
+- **API Key** — if your instance requires authentication
+- **Authority Source** — `SCDC`, `CCC`, or `All` (for ModernGov queries)
+- **Address Source** — `Alloy` or `OSData` (for address lookup provider)
+- **Cache Lifetime** — how long to cache responses (default: 1 hour)
+- **Radii** — default search radii for events and planning
+- **Enabled Services** — toggle individual API services on/off
 
 ## Usage
 
 ### "In My Area" Page
 
-The module provides a page at `/in-my-area` where users can search by postcode. This page uses AJAX for instant results without page reload.
+Visit `/in-my-area` — users enter a postcode and get AJAX results.
 
 ### Postcode Search Block
 
-Place the "In My Area - Postcode Search" block in any region:
+Place the **"In My Area - Postcode Search"** block in any region via Admin > Structure > Block layout.
 
-1. Go to **Admin > Structure > Block layout**
-2. Click **Place block** in your chosen region
-3. Search for **In My Area - Postcode Search**
-4. Save
+### Drupal JSON Endpoints
 
-### API Endpoints
+For headless/decoupled use:
 
-The module exposes JSON endpoints for headless/decoupled use:
+| Drupal endpoint | Proxies to |
+|----------------|-----------|
+| `GET /api/localisation/search/{postcode}` | `/api/v1/Localisations/{postcode}` |
+| `GET /api/localisation/addresses/{postcode}` | `/api/v1/Addresses/PostcodeSearch/{postcode}` |
+| `GET /api/localisation/collections/{premiseId}` | `/api/v1/Collections/Search/{premiseId}` |
+| `GET /api/localisation/councillors/{postcode}` | `/api/v1/ModernGov/GetCouncillors/{postcode}` |
+| `GET /api/localisation/planning/{postcode}` | `/api/v1/Planning/ApplicationByPostcode/{postcode}` |
 
-| Endpoint | Description |
-|----------|-------------|
-| `GET /api/localisation/search/{postcode}` | Combined localisation data |
-| `GET /api/localisation/addresses/{postcode}` | Address lookup |
-| `GET /api/localisation/collections/{premiseId}` | Bin collections |
-| `GET /api/localisation/councillors/{postcode}` | Councillors |
-| `GET /api/localisation/planning/{postcode}` | Planning applications |
+### Using the API Client in Custom Code
+
+```php
+// Get the service.
+$client = \Drupal::service('localgov_localisation.api_client');
+
+// Combined lookup.
+$data = $client->localise('CB2 1TN');
+
+// Individual endpoints.
+$addresses = $client->addressPostcodeSearch('CB2 1TN');
+$councillors = $client->councillorsByPostcode('CB2 1TN');
+$planning = $client->planningByPostcode('CB2 1TN', 3.0);
+$constraints = $client->planningConstraints('CB2 1TN');
+$meetings = $client->meetings(6, 10, 'SCDC');
+$collections = $client->collections('PREMISE-ID-HERE');
+```
 
 ## Multi-Council Deployment
 
-This module is designed to work across multiple councils during LGR. Each council:
+This module is designed for sharing across councils during LGR:
 
-1. Deploys their own Localisation API instance
-2. Configures the module to point at their API
-3. Sets their authority identifier
-4. Toggles which services their API supports
-
-The same Drupal module works for all councils — only the config changes.
+1. Each council deploys their own Localisation API instance
+2. Install this module via Composer
+3. Configure the API URL and authority source
+4. Toggle which services their API supports
+5. Same module, different config
 
 ## Requirements
 
 - Drupal 10.3+ or 11
-- A running Localisation API instance
+- A running Localisation API instance (OpenAPI 3.0.4 compatible)
 - PHP 8.1+
 
 ## License
