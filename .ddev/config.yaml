@@ -7,6 +7,9 @@ xdebug_enabled: false
 additional_hostnames: []
 additional_fqdns: []
 database:
+  type: mariadb
+  version: "11.8"
+nodejs_version: "18"
     type: mariadb
     version: "11.8"
 hooks:

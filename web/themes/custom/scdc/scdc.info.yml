@@ -6,12 +6,16 @@ base theme: localgov_base
 package: Custom
 
 regions:
+  tabs: Tabs
   header: Header
+  search: Search
+  mobile_search: 'Mobile search'
   primary_menu: 'Primary menu'
   secondary_menu: 'Secondary menu'
+  subsites_menu: 'Subsites menu'
+  banner: Banner
   breadcrumb: Breadcrumb
-  highlighted: Highlighted
-  help: Help
+  messages: Messages
   content_top: 'Content top'
   content: Content
   content_bottom: 'Content bottom'
@@ -20,15 +24,13 @@ regions:
   footer_first: 'Footer first'
   footer_second: 'Footer second'
   footer_third: 'Footer third'
-  footer_fourth: 'Footer fourth'
   footer: Footer
-  pre_content: 'Pre content'
-  banner: Banner
-  tabs: Tabs
+  lower_footer_first: 'Lower footer first'
+  lower_footer_second: 'Lower footer second'
+  lower_footer_third: 'Lower footer third'
+  housekeeping: Housekeeping
+  disabled: Disabled
 
 libraries:
   - scdc/global-styling
   - scdc/global-scripts
-
-libraries-override:
-  localgov_base/global-styling: false
