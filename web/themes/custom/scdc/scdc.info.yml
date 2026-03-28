@@ -34,3 +34,8 @@ regions:
 libraries:
   - scdc/global-styling
   - scdc/global-scripts
+
+component-libraries:
+  scdc:
+    paths:
+      - templates

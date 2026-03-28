@@ -1,49 +1,52 @@
 // ==========================================================================
-// Services landing page
+// Service pages - matching scambs.gov.uk interior pages
 // ==========================================================================
 
-.page--services {
-  .service-list {
-    @include container;
+// Service landing page (e.g. /housing, /council-tax)
+.page-node-type-localgov-services-landing,
+.page-node-type-localgov-services-sublanding {
+  .node__content {
+    max-width: $max-width-narrow;
+  }
+}
 
-    &__category {
-      margin-bottom: $spacing-3xl;
+// Service link list (vertical links on interior pages)
+.service-link-list {
+  @extend %list-reset;
+
+  li {
+    border-bottom: 1px solid $border-color;
+
+    &:first-child {
+      border-top: 1px solid $border-color;
+    }
+  }
+
+  a {
+    display: block;
+    padding: $spacing-md 0;
+    color: $color-primary;
+    text-decoration: none;
+    font-size: $font-size-md;
+
+    &:hover {
+      text-decoration: underline;
+      color: $color-primary-dark;
     }
 
-    &__heading {
-      padding-bottom: $spacing-sm;
-      border-bottom: 3px solid $color-primary;
-      margin-bottom: $spacing-lg;
+    &:focus {
+      @include focus-style;
     }
+  }
+}
 
-    &__items {
-      @extend %list-reset;
-      display: grid;
-      gap: $spacing-md;
-      grid-template-columns: 1fr;
+// Service page content
+.page-node-type-localgov-services-page {
+  .node__content {
+    max-width: $max-width-narrow;
 
-      @include respond-to('tablet') {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      @include respond-to('wide') {
-        grid-template-columns: repeat(3, 1fr);
-      }
-    }
-
-    &__link {
-      display: block;
-      padding: $spacing-md;
-      border: $border-width solid $border-color;
-      border-radius: $border-radius-sm;
-      color: $color-primary;
-      text-decoration: none;
-      transition: all $transition-speed-fast $transition-easing;
-
-      &:hover {
-        border-color: $color-primary;
-        box-shadow: $shadow-sm;
-      }
+    h2 {
+      margin-top: $spacing-2xl;
     }
   }
 }

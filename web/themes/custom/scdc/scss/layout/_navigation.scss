@@ -1,127 +1,129 @@
 // ==========================================================================
-// Navigation
+// Main Navigation - scambs.gov.uk mega-menu style
 // ==========================================================================
 
-.primary-nav {
-  background-color: $color-primary-dark;
+.main-nav {
+  background-color: $color-secondary;
+  display: none;
 
-  &__wrapper {
-    @include container;
+  @include respond-to('wide') {
+    display: block;
+  }
+
+  // Mobile open state
+  &.is-open {
+    display: block;
   }
 
   &__list {
     @extend %list-reset;
-    display: none;
+    display: flex;
 
     @include respond-to('wide') {
-      display: flex;
       gap: 0;
     }
   }
 
   &__item {
     position: relative;
-  }
 
-  &__link {
-    display: block;
-    padding: $spacing-md $spacing-lg;
-    color: $color-white;
-    text-decoration: none;
-    font-weight: $font-weight-medium;
-    transition: background-color $transition-speed-fast $transition-easing;
-
-    &:hover,
-    &:focus,
-    &[aria-current="page"] {
-      background-color: rgba($color-white, 0.15);
-      color: $color-white;
-    }
-
-    &:focus {
-      @include focus-style;
-    }
-  }
-
-  // Dropdown
-  &__dropdown {
-    @extend %list-reset;
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    min-width: 220px;
-    background-color: $color-white;
-    box-shadow: $shadow-lg;
-    border-radius: 0 0 $border-radius-sm $border-radius-sm;
-    z-index: z('dropdown');
-
-    .primary-nav__item:hover &,
-    .primary-nav__item:focus-within & {
-      display: block;
-    }
-
-    .primary-nav__link {
-      color: $color-black;
-      padding: $spacing-sm $spacing-md;
-
-      &:hover {
-        background-color: $color-off-white;
-        color: $color-primary;
+    &--has-children {
+      > .main-nav__link {
+        padding-right: $spacing-xl;
       }
     }
   }
 
-  // Mobile toggle
-  &__toggle {
+  &__link {
     @extend %button-reset;
     display: flex;
     align-items: center;
-    gap: $spacing-sm;
-    padding: $spacing-sm $spacing-md;
+    gap: $spacing-xs;
+    padding: $spacing-md $spacing-lg;
     color: $color-white;
     font-weight: $font-weight-semi;
+    font-size: $font-size-md;
+    white-space: nowrap;
+    transition: background-color $transition-speed-fast $transition-easing;
 
-    @include respond-to('wide') {
-      display: none;
+    &:hover {
+      background-color: rgba($color-white, 0.15);
     }
 
     &:focus {
       @include focus-style;
     }
+
+    &[aria-expanded="true"] {
+      background-color: rgba($color-white, 0.15);
+
+      .main-nav__chevron {
+        transform: rotate(180deg);
+      }
+    }
   }
 
-  // Mobile open state
-  &.is-open {
-    .primary-nav__list {
-      display: block;
+  &__chevron {
+    transition: transform $transition-speed-base $transition-easing;
+    flex-shrink: 0;
+  }
+
+  // Dropdown panel
+  &__dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 280px;
+    background-color: $color-white;
+    box-shadow: $shadow-lg;
+    z-index: z('dropdown');
+    border-top: 3px solid $color-accent;
+
+    &[hidden] {
+      display: none;
+    }
+
+    &-inner {
+      padding: $spacing-lg;
+
+      ul {
+        @extend %list-reset;
+        column-count: 2;
+        column-gap: $spacing-xl;
+
+        @include respond-to('wide') {
+          column-count: 3;
+        }
+      }
+
+      li {
+        break-inside: avoid;
+        margin-bottom: $spacing-sm;
+      }
+
+      a {
+        color: $color-primary;
+        text-decoration: none;
+        padding: $spacing-xs 0;
+        display: block;
+        font-size: $font-size-sm;
+
+        &:hover {
+          text-decoration: underline;
+          color: $color-primary-dark;
+        }
+
+        &:focus {
+          @include focus-style;
+        }
+      }
     }
   }
 }
 
-// Secondary navigation
-.secondary-nav {
-  @include container;
-  padding-top: $spacing-xs;
-  padding-bottom: $spacing-xs;
-
-  &__list {
-    @extend %list-reset;
-    display: flex;
-    gap: $spacing-md;
-    justify-content: flex-end;
-    font-size: $font-size-sm;
-  }
-
-  &__link {
-    color: $color-white;
-    text-decoration: none;
-    opacity: 0.85;
-
-    &:hover {
-      opacity: 1;
-      text-decoration: underline;
-      color: $color-white;
-    }
-  }
+// Breadcrumb wrapper
+.breadcrumb-wrapper {
+  background-color: $color-off-white;
+  padding: $spacing-sm 0;
+  font-size: $font-size-sm;
 }

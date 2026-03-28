@@ -1,33 +1,7 @@
 {#
 /**
  * @file
- * SCDC theme implementation to display a single page.
- *
- * Available variables:
- * - node: The node entity with limited access to object properties and methods.
- * - content: All block content assigned to regions.
- * - page: All regions of the page.
- *
- * Regions:
- * - page.header
- * - page.primary_menu
- * - page.secondary_menu
- * - page.breadcrumb
- * - page.highlighted
- * - page.help
- * - page.banner
- * - page.tabs
- * - page.pre_content
- * - page.content_top
- * - page.content
- * - page.content_bottom
- * - page.sidebar_first
- * - page.sidebar_second
- * - page.footer_first
- * - page.footer_second
- * - page.footer_third
- * - page.footer_fourth
- * - page.footer
+ * SCDC page template replicating scambs.gov.uk layout.
  */
 #}
 
@@ -35,41 +9,168 @@
 
   {# Header #}
   <header class="site-header" role="banner">
-    {% if page.secondary_menu %}
-      <div class="site-header__top">
-        <nav class="secondary-nav" aria-label="{{ 'Secondary navigation'|t }}">
-          {{ page.secondary_menu }}
-        </nav>
-      </div>
-    {% endif %}
 
-    <div class="site-header__main">
-      <div class="site-header__branding">
-        {% if page.header %}
-          {{ page.header }}
-        {% endif %}
-      </div>
-      <div class="site-header__actions">
-        {# Search toggle, accessibility tools, etc. #}
+    {# Utility bar #}
+    <div class="utility-bar">
+      <div class="container">
+        <nav class="utility-bar__nav" aria-label="{{ 'Utility navigation'|t }}">
+          <ul class="utility-bar__list">
+            <li><a href="/accessibility">{{ 'Accessibility'|t }}</a></li>
+            <li><a href="/translate">{{ 'Translate'|t }}</a></li>
+            <li><a href="/feedback">{{ 'Leave feedback'|t }}</a></li>
+            <li><a href="/work-with-us">{{ 'Work with us'|t }}</a></li>
+            <li><a href="/news">{{ 'News'|t }}</a></li>
+          </ul>
+        </nav>
       </div>
     </div>
 
-    {% if page.primary_menu %}
-      <nav class="primary-nav" aria-label="{{ 'Main navigation'|t }}">
-        <div class="primary-nav__wrapper">
-          <button class="primary-nav__toggle" aria-expanded="false" aria-controls="primary-menu">
-            <span class="primary-nav__toggle-text">{{ 'Menu'|t }}</span>
+    {# Main header #}
+    <div class="site-header__main">
+      <div class="container">
+        <div class="site-header__inner">
+
+          {# Branding #}
+          <div class="site-header__branding">
+            {% if page.header %}
+              {{ page.header }}
+            {% else %}
+              <a href="{{ path('<front>') }}" class="site-header__logo-link" rel="home">
+                <span class="site-header__site-name">{{ 'South Cambridgeshire District Council'|t }}</span>
+              </a>
+            {% endif %}
+          </div>
+
+          {# Search #}
+          <div class="site-header__search">
+            {% if page.search %}
+              {{ page.search }}
+            {% else %}
+              <form class="header-search" action="/search" method="get" role="search" aria-label="{{ 'Site search'|t }}">
+                <label for="header-search-input" class="visually-hidden">{{ 'Search this site'|t }}</label>
+                <input type="search" id="header-search-input" name="keys" class="header-search__input" placeholder="{{ 'Enter search criteria'|t }}">
+                <button type="submit" class="header-search__submit">
+                  <span class="visually-hidden">{{ 'Search'|t }}</span>
+                  <svg class="header-search__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true">
+                    <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+                  </svg>
+                </button>
+              </form>
+            {% endif %}
+          </div>
+
+          {# My Account link #}
+          <div class="site-header__account">
+            <a href="/user/login" class="site-header__account-link">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true">
+                <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+              </svg>
+              <span>{{ 'Log in to My South Cambs'|t }}</span>
+            </a>
+          </div>
+
+          {# Mobile menu toggle #}
+          <button class="site-header__menu-toggle" aria-expanded="false" aria-controls="main-nav">
+            <span class="site-header__menu-toggle-text">{{ 'Menu'|t }}</span>
           </button>
-          {{ page.primary_menu }}
+
         </div>
-      </nav>
-    {% endif %}
+      </div>
+    </div>
+
+    {# Quick actions #}
+    <div class="quick-actions">
+      <div class="container">
+        <ul class="quick-actions__list">
+          <li class="quick-actions__item">
+            <a href="/book" class="quick-actions__link">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="currentColor" aria-hidden="true"><path d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z"/></svg>
+              <span>{{ 'Book'|t }}</span>
+            </a>
+          </li>
+          <li class="quick-actions__item">
+            <a href="/pay" class="quick-actions__link">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="currentColor" aria-hidden="true"><path d="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/></svg>
+              <span>{{ 'Pay'|t }}</span>
+            </a>
+          </li>
+          <li class="quick-actions__item">
+            <a href="/notify" class="quick-actions__link">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="currentColor" aria-hidden="true"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg>
+              <span>{{ 'Notify'|t }}</span>
+            </a>
+          </li>
+          <li class="quick-actions__item">
+            <a href="/apply" class="quick-actions__link">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="currentColor" aria-hidden="true"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+              <span>{{ 'Apply'|t }}</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    {# Main navigation - mega menu #}
+    <nav class="main-nav" id="main-nav" aria-label="{{ 'Main navigation'|t }}">
+      <div class="container">
+        <ul class="main-nav__list">
+          {# Residents #}
+          <li class="main-nav__item main-nav__item--has-children">
+            <button class="main-nav__link" aria-expanded="false" aria-controls="nav-residents">
+              {{ 'Residents'|t }}
+              <svg class="main-nav__chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6z"/></svg>
+            </button>
+            <div class="main-nav__dropdown" id="nav-residents" hidden>
+              <div class="main-nav__dropdown-inner container">
+                {{ page.primary_menu }}
+              </div>
+            </div>
+          </li>
+          {# Business #}
+          <li class="main-nav__item main-nav__item--has-children">
+            <button class="main-nav__link" aria-expanded="false" aria-controls="nav-business">
+              {{ 'Business'|t }}
+              <svg class="main-nav__chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6z"/></svg>
+            </button>
+            <div class="main-nav__dropdown" id="nav-business" hidden>
+              <div class="main-nav__dropdown-inner container">
+                {{ page.secondary_menu }}
+              </div>
+            </div>
+          </li>
+          {# About Your Council #}
+          <li class="main-nav__item main-nav__item--has-children">
+            <button class="main-nav__link" aria-expanded="false" aria-controls="nav-about">
+              {{ 'About Your Council'|t }}
+              <svg class="main-nav__chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6z"/></svg>
+            </button>
+            <div class="main-nav__dropdown" id="nav-about" hidden>
+              <div class="main-nav__dropdown-inner container">
+                {{ page.subsites_menu }}
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
   </header>
 
   {# Breadcrumb #}
   {% if page.breadcrumb %}
-    <div class="breadcrumb" role="navigation" aria-label="{{ 'Breadcrumb'|t }}">
-      {{ page.breadcrumb }}
+    <div class="breadcrumb-wrapper">
+      <div class="container">
+        {{ page.breadcrumb }}
+      </div>
+    </div>
+  {% endif %}
+
+  {# Messages #}
+  {% if page.messages %}
+    <div class="messages-wrapper">
+      <div class="container">
+        {{ page.messages }}
+      </div>
     </div>
   {% endif %}
 
@@ -80,20 +181,11 @@
     </div>
   {% endif %}
 
-  {# Highlighted #}
-  {% if page.highlighted %}
-    <div class="highlighted">
-      <aside class="container" role="complementary">
-        {{ page.highlighted }}
-      </aside>
-    </div>
-  {% endif %}
-
-  {# Help #}
-  {% if page.help %}
-    <div class="help">
+  {# Tabs (admin) #}
+  {% if page.tabs %}
+    <div class="tabs-wrapper">
       <div class="container">
-        {{ page.help }}
+        {{ page.tabs }}
       </div>
     </div>
   {% endif %}
@@ -102,58 +194,40 @@
   <main role="main" id="main-content" class="main-content">
     <a id="main-content-anchor" tabindex="-1"></a>
 
-    {# Tabs #}
-    {% if page.tabs %}
-      <div class="tabs-wrapper container">
-        {{ page.tabs }}
-      </div>
-    {% endif %}
-
-    {# Pre content #}
-    {% if page.pre_content %}
-      <div class="pre-content">
-        {{ page.pre_content }}
-      </div>
-    {% endif %}
-
     {# Content top #}
     {% if page.content_top %}
       <div class="content-top">
-        <div class="container">
-          {{ page.content_top }}
-        </div>
+        {{ page.content_top }}
       </div>
     {% endif %}
 
+    {# Content with optional sidebars #}
     <div class="container">
-      <div class="layout-content{% if page.sidebar_first or page.sidebar_second %} layout-sidebar{% endif %}">
-        {# Sidebar first #}
+      <div class="layout-content{% if page.sidebar_first or page.sidebar_second %} layout-content--with-sidebar{% endif %}">
+
         {% if page.sidebar_first %}
           <aside class="sidebar sidebar--first" role="complementary">
             {{ page.sidebar_first }}
           </aside>
         {% endif %}
 
-        {# Content #}
         <div class="content-area">
           {{ page.content }}
         </div>
 
-        {# Sidebar second #}
         {% if page.sidebar_second %}
           <aside class="sidebar sidebar--second" role="complementary">
             {{ page.sidebar_second }}
           </aside>
         {% endif %}
+
       </div>
     </div>
 
     {# Content bottom #}
     {% if page.content_bottom %}
       <div class="content-bottom">
-        <div class="container">
-          {{ page.content_bottom }}
-        </div>
+        {{ page.content_bottom }}
       </div>
     {% endif %}
   </main>
@@ -161,35 +235,69 @@
   {# Footer #}
   <footer class="site-footer" role="contentinfo">
     <div class="site-footer__main">
-      {% if page.footer_first %}
-        <div class="site-footer__column">
-          {{ page.footer_first }}
-        </div>
-      {% endif %}
-      {% if page.footer_second %}
-        <div class="site-footer__column">
-          {{ page.footer_second }}
-        </div>
-      {% endif %}
-      {% if page.footer_third %}
-        <div class="site-footer__column">
-          {{ page.footer_third }}
-        </div>
-      {% endif %}
-      {% if page.footer_fourth %}
-        <div class="site-footer__column">
-          {{ page.footer_fourth }}
-        </div>
-      {% endif %}
-    </div>
+      <div class="container">
+        <div class="site-footer__grid">
 
-    {% if page.footer %}
-      <div class="site-footer__bottom">
-        <div class="site-footer__bottom-inner">
-          {{ page.footer }}
+          {# Logo and social #}
+          <div class="site-footer__branding">
+            <a href="{{ path('<front>') }}" class="site-footer__logo-link" rel="home">
+              <span class="site-footer__site-name">{{ 'South Cambridgeshire District Council'|t }}</span>
+            </a>
+            <ul class="site-footer__social">
+              <li><a href="https://www.facebook.com/SouthCambs" aria-label="{{ 'Facebook'|t }}" rel="noopener noreferrer" target="_blank">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="currentColor" aria-hidden="true"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c5.05-.5 9-4.76 9-9.95z"/></svg>
+              </a></li>
+              <li><a href="https://twitter.com/SouthCambs" aria-label="{{ 'X (Twitter)'|t }}" rel="noopener noreferrer" target="_blank">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+              </a></li>
+              <li><a href="https://www.linkedin.com/company/south-cambridgeshire-district-council" aria-label="{{ 'LinkedIn'|t }}" rel="noopener noreferrer" target="_blank">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="currentColor" aria-hidden="true"><path d="M19 3a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h14m-.5 15.5v-5.3a3.26 3.26 0 00-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 011.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 001.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 00-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg>
+              </a></li>
+              <li><a href="https://www.instagram.com/southcambs" aria-label="{{ 'Instagram'|t }}" rel="noopener noreferrer" target="_blank">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="currentColor" aria-hidden="true"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 01-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 017.8 2m-.2 2A3.6 3.6 0 004 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 003.6-3.6V7.6C20 5.61 18.39 4 16.4 4H7.6m9.65 1.5a1.25 1.25 0 110 2.5 1.25 1.25 0 010-2.5M12 7a5 5 0 110 10 5 5 0 010-10m0 2a3 3 0 100 6 3 3 0 000-6z"/></svg>
+              </a></li>
+              <li><a href="https://www.youtube.com/user/SouthCambsDC" aria-label="{{ 'YouTube'|t }}" rel="noopener noreferrer" target="_blank">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="currentColor" aria-hidden="true"><path d="M10 15l5.19-3L10 9v6m11.56-7.83c.13.47.22 1.1.28 1.9.07.8.1 1.49.1 2.09L22 12c0 2.19-.16 3.8-.44 4.83-.25.9-.83 1.48-1.73 1.73-.47.13-1.33.22-2.65.28-1.3.07-2.49.1-3.59.1L12 19c-4.19 0-6.8-.16-7.83-.44-.9-.25-1.48-.83-1.73-1.73-.13-.47-.22-1.1-.28-1.9-.07-.8-.1-1.49-.1-2.09L2 12c0-2.19.16-3.8.44-4.83.25-.9.83-1.48 1.73-1.73.47-.13 1.33-.22 2.65-.28 1.3-.07 2.49-.1 3.59-.1L12 5c4.19 0 6.8.16 7.83.44.9.25 1.48.83 1.73 1.73z"/></svg>
+              </a></li>
+            </ul>
+          </div>
+
+          {# Footer columns #}
+          {% if page.footer_first %}
+            <div class="site-footer__column">
+              {{ page.footer_first }}
+            </div>
+          {% endif %}
+          {% if page.footer_second %}
+            <div class="site-footer__column">
+              {{ page.footer_second }}
+            </div>
+          {% endif %}
+          {% if page.footer_third %}
+            <div class="site-footer__column">
+              {{ page.footer_third }}
+            </div>
+          {% endif %}
         </div>
       </div>
-    {% endif %}
+    </div>
+
+    {# Lower footer #}
+    <div class="site-footer__bottom">
+      <div class="container">
+        <div class="site-footer__bottom-inner">
+          <p class="site-footer__copyright">&copy; {{ 'South Cambridgeshire District Council'|t }} {{ 'now'|date('Y') }}</p>
+          <nav class="site-footer__legal" aria-label="{{ 'Legal'|t }}">
+            <ul class="site-footer__legal-list">
+              <li><a href="/accessibility">{{ 'Accessibility'|t }}</a></li>
+              <li><a href="/cookies">{{ 'Cookies'|t }}</a></li>
+              <li><a href="/privacy-notice">{{ 'Privacy Notice'|t }}</a></li>
+              <li><a href="/modern-slavery-statement">{{ 'Modern Slavery Statement'|t }}</a></li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
   </footer>
 
 </div>

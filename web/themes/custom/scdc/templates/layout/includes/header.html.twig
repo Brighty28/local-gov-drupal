@@ -1,0 +1,140 @@
+{#
+/**
+ * @file
+ * Shared header include for SCDC theme.
+ */
+#}
+<header class="site-header" role="banner">
+
+  {# Utility bar #}
+  <div class="utility-bar">
+    <div class="container">
+      <nav class="utility-bar__nav" aria-label="{{ 'Utility navigation'|t }}">
+        <ul class="utility-bar__list">
+          <li><a href="/accessibility">{{ 'Accessibility'|t }}</a></li>
+          <li><a href="/translate">{{ 'Translate'|t }}</a></li>
+          <li><a href="/feedback">{{ 'Leave feedback'|t }}</a></li>
+          <li><a href="/work-with-us">{{ 'Work with us'|t }}</a></li>
+          <li><a href="/news">{{ 'News'|t }}</a></li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+
+  {# Main header #}
+  <div class="site-header__main">
+    <div class="container">
+      <div class="site-header__inner">
+        <div class="site-header__branding">
+          {% if page.header %}
+            {{ page.header }}
+          {% else %}
+            <a href="{{ path('<front>') }}" class="site-header__logo-link" rel="home">
+              <span class="site-header__site-name">{{ 'South Cambridgeshire District Council'|t }}</span>
+            </a>
+          {% endif %}
+        </div>
+
+        <div class="site-header__search">
+          {% if page.search %}
+            {{ page.search }}
+          {% else %}
+            <form class="header-search" action="/search" method="get" role="search" aria-label="{{ 'Site search'|t }}">
+              <label for="header-search-input" class="visually-hidden">{{ 'Search this site'|t }}</label>
+              <input type="search" id="header-search-input" name="keys" class="header-search__input" placeholder="{{ 'Enter search criteria'|t }}">
+              <button type="submit" class="header-search__submit">
+                <span class="visually-hidden">{{ 'Search'|t }}</span>
+                <svg class="header-search__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+              </button>
+            </form>
+          {% endif %}
+        </div>
+
+        <div class="site-header__account">
+          <a href="/user/login" class="site-header__account-link">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+            <span>{{ 'Log in to My South Cambs'|t }}</span>
+          </a>
+        </div>
+
+        <button class="site-header__menu-toggle" aria-expanded="false" aria-controls="main-nav">
+          <span class="site-header__menu-toggle-text">{{ 'Menu'|t }}</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  {# Quick actions #}
+  <div class="quick-actions">
+    <div class="container">
+      <ul class="quick-actions__list">
+        <li class="quick-actions__item">
+          <a href="/book" class="quick-actions__link">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="currentColor" aria-hidden="true"><path d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z"/></svg>
+            <span>{{ 'Book'|t }}</span>
+          </a>
+        </li>
+        <li class="quick-actions__item">
+          <a href="/pay" class="quick-actions__link">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="currentColor" aria-hidden="true"><path d="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/></svg>
+            <span>{{ 'Pay'|t }}</span>
+          </a>
+        </li>
+        <li class="quick-actions__item">
+          <a href="/notify" class="quick-actions__link">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="currentColor" aria-hidden="true"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg>
+            <span>{{ 'Notify'|t }}</span>
+          </a>
+        </li>
+        <li class="quick-actions__item">
+          <a href="/apply" class="quick-actions__link">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="currentColor" aria-hidden="true"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+            <span>{{ 'Apply'|t }}</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  {# Main navigation #}
+  <nav class="main-nav" id="main-nav" aria-label="{{ 'Main navigation'|t }}">
+    <div class="container">
+      <ul class="main-nav__list">
+        <li class="main-nav__item main-nav__item--has-children">
+          <button class="main-nav__link" aria-expanded="false" aria-controls="nav-residents">
+            {{ 'Residents'|t }}
+            <svg class="main-nav__chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6z"/></svg>
+          </button>
+          <div class="main-nav__dropdown" id="nav-residents" hidden>
+            <div class="main-nav__dropdown-inner container">
+              {{ page.primary_menu }}
+            </div>
+          </div>
+        </li>
+        <li class="main-nav__item main-nav__item--has-children">
+          <button class="main-nav__link" aria-expanded="false" aria-controls="nav-business">
+            {{ 'Business'|t }}
+            <svg class="main-nav__chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6z"/></svg>
+          </button>
+          <div class="main-nav__dropdown" id="nav-business" hidden>
+            <div class="main-nav__dropdown-inner container">
+              {{ page.secondary_menu }}
+            </div>
+          </div>
+        </li>
+        <li class="main-nav__item main-nav__item--has-children">
+          <button class="main-nav__link" aria-expanded="false" aria-controls="nav-about">
+            {{ 'About Your Council'|t }}
+            <svg class="main-nav__chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6z"/></svg>
+          </button>
+          <div class="main-nav__dropdown" id="nav-about" hidden>
+            <div class="main-nav__dropdown-inner container">
+              {{ page.subsites_menu }}
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+</header>

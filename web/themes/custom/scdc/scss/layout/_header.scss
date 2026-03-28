@@ -1,57 +1,249 @@
 // ==========================================================================
-// Header
+// Header - matching scambs.gov.uk
 // ==========================================================================
 
+// Utility bar (top)
+.utility-bar {
+  background-color: $color-primary-dark;
+  color: $color-white;
+  font-size: $font-size-sm;
+
+  &__nav {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  &__list {
+    @extend %list-reset;
+    display: none;
+
+    @include respond-to('tablet') {
+      display: flex;
+      gap: $spacing-md;
+    }
+
+    a {
+      color: $color-white;
+      text-decoration: none;
+      padding: $spacing-xs 0;
+      display: inline-block;
+      opacity: 0.85;
+
+      &:hover {
+        opacity: 1;
+        text-decoration: underline;
+      }
+
+      &:focus {
+        @include focus-style;
+      }
+    }
+  }
+}
+
+// Main header
 .site-header {
   background-color: $color-primary;
   color: $color-white;
 
-  &__top {
-    background-color: $color-primary-dark;
-    padding: $spacing-xs 0;
-  }
-
   &__main {
-    @include container;
-    @include flex-between;
-    padding-top: $spacing-md;
-    padding-bottom: $spacing-md;
+    padding: $spacing-md 0;
   }
 
-  &__branding {
+  &__inner {
     display: flex;
     align-items: center;
     gap: $spacing-md;
-  }
-
-  &__logo {
-    max-height: 60px;
-    width: auto;
+    flex-wrap: wrap;
 
     @include respond-to('tablet') {
-      max-height: 80px;
+      flex-wrap: nowrap;
     }
   }
 
-  &__site-name {
-    font-size: $font-size-xl;
-    font-weight: $font-weight-bold;
-    color: $color-white;
+  &__branding {
+    flex-shrink: 0;
+  }
+
+  &__logo-link {
+    display: flex;
+    align-items: center;
     text-decoration: none;
-
-    @include respond-to('tablet') {
-      font-size: $font-size-2xl;
-    }
+    color: $color-white;
 
     &:hover {
       color: $color-white;
       text-decoration: underline;
     }
+
+    &:focus {
+      @include focus-style;
+    }
+
+    img {
+      max-height: 50px;
+      width: auto;
+
+      @include respond-to('tablet') {
+        max-height: 65px;
+      }
+    }
   }
 
-  &__actions {
+  &__site-name {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-bold;
+    color: $color-white;
+
+    @include respond-to('tablet') {
+      font-size: $font-size-xl;
+    }
+  }
+
+  // Search
+  &__search {
+    flex-grow: 1;
+    display: none;
+
+    @include respond-to('tablet') {
+      display: block;
+      max-width: 400px;
+      margin-left: auto;
+    }
+  }
+
+  // Account link
+  &__account {
+    display: none;
+
+    @include respond-to('wide') {
+      display: block;
+      flex-shrink: 0;
+    }
+  }
+
+  &__account-link {
     display: flex;
     align-items: center;
-    gap: $spacing-md;
+    gap: $spacing-xs;
+    color: $color-white;
+    text-decoration: none;
+    font-size: $font-size-sm;
+    white-space: nowrap;
+
+    &:hover {
+      text-decoration: underline;
+    }
+
+    &:focus {
+      @include focus-style;
+    }
+
+    svg {
+      flex-shrink: 0;
+    }
+  }
+
+  // Mobile menu toggle
+  &__menu-toggle {
+    @extend %button-reset;
+    display: flex;
+    align-items: center;
+    gap: $spacing-xs;
+    padding: $spacing-sm $spacing-md;
+    color: $color-white;
+    font-weight: $font-weight-semi;
+    border: 1px solid rgba($color-white, 0.3);
+    border-radius: $border-radius-sm;
+
+    @include respond-to('wide') {
+      display: none;
+    }
+
+    &:focus {
+      @include focus-style;
+    }
+  }
+}
+
+// Header search form
+.header-search {
+  display: flex;
+  border-radius: $border-radius-sm;
+  overflow: hidden;
+
+  &__input {
+    flex-grow: 1;
+    padding: $spacing-sm $spacing-md;
+    border: none;
+    font-size: $font-size-sm;
+    min-width: 0;
+
+    &:focus {
+      outline: 3px solid $color-focus;
+      outline-offset: -3px;
+    }
+  }
+
+  &__submit {
+    @extend %button-reset;
+    padding: $spacing-sm $spacing-md;
+    background-color: $color-secondary;
+    color: $color-white;
+    display: flex;
+    align-items: center;
+
+    &:hover {
+      background-color: $color-secondary-dark;
+    }
+
+    &:focus {
+      @include focus-style;
+    }
+  }
+}
+
+// Quick actions bar
+.quick-actions {
+  background-color: $color-primary-light;
+  border-top: 1px solid rgba($color-white, 0.15);
+
+  &__list {
+    @extend %list-reset;
+    display: flex;
+    justify-content: center;
+    gap: 0;
+  }
+
+  &__item {
+    flex: 1;
+    max-width: 150px;
+  }
+
+  &__link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: $spacing-xs;
+    padding: $spacing-md $spacing-sm;
+    color: $color-white;
+    text-decoration: none;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+    text-align: center;
+    transition: background-color $transition-speed-fast $transition-easing;
+
+    &:hover {
+      background-color: rgba($color-white, 0.1);
+      color: $color-white;
+    }
+
+    &:focus {
+      @include focus-style;
+    }
+
+    svg {
+      opacity: 0.9;
+    }
   }
 }

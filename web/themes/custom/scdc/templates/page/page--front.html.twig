@@ -1,0 +1,106 @@
+{#
+/**
+ * @file
+ * SCDC homepage template replicating scambs.gov.uk front page.
+ */
+#}
+
+<div class="layout-container">
+
+  {# Include the same header as the main page template #}
+  {% include '@scdc/layout/includes/header.html.twig' %}
+
+  {# Messages #}
+  {% if page.messages %}
+    <div class="messages-wrapper">
+      <div class="container">
+        {{ page.messages }}
+      </div>
+    </div>
+  {% endif %}
+
+  {# Tabs (admin) #}
+  {% if page.tabs %}
+    <div class="tabs-wrapper">
+      <div class="container">
+        {{ page.tabs }}
+      </div>
+    </div>
+  {% endif %}
+
+  {# Main content #}
+  <main role="main" id="main-content" class="main-content">
+    <a id="main-content-anchor" tabindex="-1"></a>
+
+    {# Hero banner #}
+    <section class="hero">
+      <div class="hero__inner container">
+        <h1 class="hero__title">{{ 'Welcome to South Cambridgeshire District Council'|t }}</h1>
+      </div>
+    </section>
+
+    {# Postcode search - "In my area" #}
+    <section class="postcode-search" aria-label="{{ 'In my area'|t }}">
+      <div class="container">
+        <div class="postcode-search__inner">
+          <h2 class="postcode-search__title">{{ 'In my area'|t }}</h2>
+          <p class="postcode-search__desc">{{ 'Enter your postcode to access information relevant to your area such as your bin collection schedule, planning applications and local Councillor(s)'|t }}</p>
+          <form class="postcode-search__form" action="/in-my-area" method="get">
+            <label for="postcode-input" class="visually-hidden">{{ 'Enter your postcode'|t }}</label>
+            <input type="text" id="postcode-input" name="postcode" class="postcode-search__input" placeholder="{{ 'Enter your postcode'|t }}">
+            <button type="submit" class="postcode-search__submit btn btn--primary">{{ 'Search'|t }}</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    {# Service cards #}
+    {% if page.content_top %}
+      <section class="service-cards-section" aria-label="{{ 'Our services'|t }}">
+        <div class="container">
+          {{ page.content_top }}
+        </div>
+      </section>
+    {% endif %}
+
+    {# Main content area (for alert banners, etc) #}
+    {% if page.content %}
+      <section class="homepage-content">
+        <div class="container">
+          {{ page.content }}
+        </div>
+      </section>
+    {% endif %}
+
+    {# News section #}
+    {% if page.content_bottom %}
+      <section class="news-section" aria-label="{{ 'Latest news'|t }}">
+        <div class="container">
+          <h2 class="news-section__title">{{ 'Latest news'|t }}</h2>
+          {{ page.content_bottom }}
+        </div>
+      </section>
+    {% endif %}
+
+    {# A-Z Index #}
+    <section class="az-index" aria-label="{{ 'A to Z of our services'|t }}">
+      <div class="container">
+        <h2 class="az-index__title">{{ 'A to Z of our services'|t }}</h2>
+        <nav class="az-index__nav" aria-label="{{ 'Alphabetical service index'|t }}">
+          <ul class="az-index__list">
+            {% for letter in 'A'..'Z' %}
+              <li class="az-index__item">
+                <a href="/az/{{ letter|lower }}" class="az-index__link">{{ letter }}</a>
+              </li>
+            {% endfor %}
+          </ul>
+        </nav>
+      </div>
+    </section>
+
+  </main>
+
+  {# Include the same footer as the main page template #}
+  {% include '@scdc/layout/includes/footer.html.twig' %}
+
+</div>
