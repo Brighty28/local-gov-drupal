@@ -6,7 +6,7 @@ LocalGov Drupal site for South Cambridgeshire District Council (SCDC), built as 
 
 This project uses the [LocalGov Drupal](https://localgovdrupal.org/) distribution — an open-source Drupal platform designed specifically for UK local authorities. It provides content types, features, and patterns common to council websites out of the box.
 
-The custom **SCDC theme** extends `localgov_theme` and uses the **7-1 SASS architecture** for maintainable, scalable styling.
+The custom **SCDC theme** extends `localgov_base` and uses the **7-1 SASS architecture** for maintainable, scalable styling.
 
 ## Project Structure
 
@@ -135,14 +135,29 @@ This will pull in Drupal core, LocalGov Drupal, and all contrib modules into `we
 
 ### 4. Install Drupal
 
+Install with the standard profile, then enable LocalGov modules:
+
 ```bash
-ddev drush site:install localgov --account-name=admin --account-pass=admin --site-name="South Cambridgeshire District Council" -y
+ddev drush site:install standard --account-name=admin --account-pass=admin --site-name="South Cambridgeshire District Council" -y
+ddev drush en localgov_core -y
+ddev drush en localgov_services -y
+ddev drush en localgov_services_landing -y
+ddev drush en localgov_services_sublanding -y
+ddev drush en localgov_services_page -y
+ddev drush en localgov_news -y
+ddev drush en localgov_guides -y
+ddev drush en localgov_directories -y
+ddev drush en localgov_alert_banner -y
+ddev drush en localgov_step_by_step -y
+ddev drush en localgov_topics -y
 ```
 
 ### 5. Enable the SCDC theme
 
 ```bash
-ddev drush theme:enable scdc
+ddev composer require localgovdrupal/localgov_base
+ddev drush theme:enable localgov_base -y
+ddev drush theme:enable scdc -y
 ddev drush config:set system.theme default scdc -y
 ddev drush cache:rebuild
 ```

@@ -2,7 +2,7 @@ name: SCDC
 type: theme
 description: 'Custom theme for South Cambridgeshire District Council built on LocalGov Drupal using the 7-1 SASS architecture.'
 core_version_requirement: ^10.3 || ^11
-base theme: localgov_theme
+base theme: localgov_base
 package: Custom
 
 regions:
@@ -31,4 +31,4 @@ libraries:
   - scdc/global-scripts
 
 libraries-override:
-  localgov_theme/global-styling: false
+  localgov_base/global-styling: false
