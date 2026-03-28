@@ -1,0 +1,11 @@
+name: 'LocalGov Localisation'
+type: module
+description: 'Provides postcode-based localisation services for UK local authorities. Connects to a Localisation API to deliver address lookup, bin collections, councillor information, planning applications, planning constraints, local events, and democracy data — all personalised by postcode.'
+package: 'LocalGov Drupal'
+core_version_requirement: ^10.3 || ^11
+lifecycle: experimental
+
+dependencies:
+  - drupal:block
+
+configure: localgov_localisation.settings

@@ -1,0 +1,26 @@
+{#
+/**
+ * @file
+ * Compact postcode search block for placement in any region.
+ */
+#}
+
+<div class="postcode-block">
+  <h3 class="postcode-block__title">{{ 'In my area'|t }}</h3>
+  <p class="postcode-block__desc">{{ 'Enter your postcode to find local information.'|t }}</p>
+  <form class="postcode-block__form" action="{{ path('localgov_localisation.search') }}" method="get">
+    <label for="postcode-block-input" class="visually-hidden">{{ 'Enter your postcode'|t }}</label>
+    <div class="postcode-block__input-group">
+      <input
+        type="text"
+        id="postcode-block-input"
+        name="postcode"
+        class="postcode-block__input"
+        placeholder="{{ 'Enter your postcode'|t }}"
+        autocomplete="postal-code"
+        required
+      >
+      <button type="submit" class="postcode-block__submit btn btn--primary">{{ 'Search'|t }}</button>
+    </div>
+  </form>
+</div>

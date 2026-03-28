@@ -1,0 +1,8 @@
+services:
+  localgov_localisation.api_client:
+    class: Drupal\localgov_localisation\Service\LocalisationApiClient
+    arguments:
+      - '@http_client'
+      - '@config.factory'
+      - '@logger.factory'
+      - '@cache.default'

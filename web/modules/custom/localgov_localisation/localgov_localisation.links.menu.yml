@@ -1,0 +1,6 @@
+localgov_localisation.settings:
+  title: 'LocalGov Localisation'
+  description: 'Configure the Localisation API endpoint and settings.'
+  route_name: localgov_localisation.settings
+  parent: system.admin_config_services
+  weight: 10

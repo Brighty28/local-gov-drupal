@@ -1,0 +1,71 @@
+# Admin settings
+localgov_localisation.settings:
+  path: '/admin/config/services/localisation'
+  defaults:
+    _form: '\Drupal\localgov_localisation\Form\SettingsForm'
+    _title: 'LocalGov Localisation Settings'
+  requirements:
+    _permission: 'administer localgov localisation'
+
+# Postcode search page
+localgov_localisation.search:
+  path: '/in-my-area'
+  defaults:
+    _controller: '\Drupal\localgov_localisation\Controller\LocalisationController::searchPage'
+    _title: 'In my area'
+  requirements:
+    _permission: 'access content'
+
+# AJAX endpoint for postcode lookup
+localgov_localisation.ajax_search:
+  path: '/api/localisation/search/{postcode}'
+  defaults:
+    _controller: '\Drupal\localgov_localisation\Controller\LocalisationController::ajaxSearch'
+  requirements:
+    _permission: 'access content'
+    postcode: '[A-Za-z0-9 ]+'
+  options:
+    no_cache: TRUE
+
+# Address lookup endpoint
+localgov_localisation.address_lookup:
+  path: '/api/localisation/addresses/{postcode}'
+  defaults:
+    _controller: '\Drupal\localgov_localisation\Controller\LocalisationController::addressLookup'
+  requirements:
+    _permission: 'access content'
+    postcode: '[A-Za-z0-9 ]+'
+  options:
+    no_cache: TRUE
+
+# Bin collections endpoint
+localgov_localisation.collections:
+  path: '/api/localisation/collections/{premiseId}'
+  defaults:
+    _controller: '\Drupal\localgov_localisation\Controller\LocalisationController::collections'
+  requirements:
+    _permission: 'access content'
+  options:
+    no_cache: TRUE
+
+# Councillors endpoint
+localgov_localisation.councillors:
+  path: '/api/localisation/councillors/{postcode}'
+  defaults:
+    _controller: '\Drupal\localgov_localisation\Controller\LocalisationController::councillors'
+  requirements:
+    _permission: 'access content'
+    postcode: '[A-Za-z0-9 ]+'
+  options:
+    no_cache: TRUE
+
+# Planning endpoint
+localgov_localisation.planning:
+  path: '/api/localisation/planning/{postcode}'
+  defaults:
+    _controller: '\Drupal\localgov_localisation\Controller\LocalisationController::planning'
+  requirements:
+    _permission: 'access content'
+    postcode: '[A-Za-z0-9 ]+'
+  options:
+    no_cache: TRUE

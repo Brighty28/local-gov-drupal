@@ -1,0 +1,17 @@
+api_base_url: 'https://localisationapi.azurewebsites.net'
+api_key: ''
+api_version: 'v1'
+address_source: 'Alloy'
+authority_source: 'SCDC'
+cache_lifetime: 3600
+default_radius_events: 5
+default_radius_planning: 2
+enabled_services:
+  addresses: true
+  collections: true
+  councillors: true
+  planning: true
+  planning_constraints: true
+  events: true
+  democracy: true
+  localisation: true

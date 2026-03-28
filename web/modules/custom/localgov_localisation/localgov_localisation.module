@@ -1,0 +1,32 @@
+<?php
+
+/**
+ * @file
+ * Hook implementations for LocalGov Localisation module.
+ */
+
+/**
+ * Implements hook_theme().
+ */
+function localgov_localisation_theme(): array {
+  return [
+    'localgov_localisation_search' => [
+      'variables' => [
+        'postcode' => NULL,
+        'results' => NULL,
+      ],
+      'template' => 'localgov-localisation-search',
+    ],
+    'localgov_localisation_postcode_block' => [
+      'variables' => [],
+      'template' => 'localgov-localisation-postcode-block',
+    ],
+    'localgov_localisation_results' => [
+      'variables' => [
+        'results' => NULL,
+        'postcode' => NULL,
+      ],
+      'template' => 'localgov-localisation-results',
+    ],
+  ];
+}

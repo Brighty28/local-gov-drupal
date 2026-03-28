@@ -1,0 +1,47 @@
+{#
+/**
+ * @file
+ * "In my area" postcode search page template.
+ *
+ * Variables:
+ * - postcode: The searched postcode (empty if no search yet).
+ * - results: API results array (null if no search yet).
+ */
+#}
+
+<div class="localisation-search">
+  <div class="localisation-search__intro">
+    <h2>{{ 'In my area'|t }}</h2>
+    <p>{{ 'Enter your postcode to access information relevant to your area such as your bin collection schedule, planning applications and local Councillor(s).'|t }}</p>
+  </div>
+
+  <form class="localisation-search__form" action="{{ path('localgov_localisation.search') }}" method="get" data-localisation-form>
+    <div class="localisation-search__input-group">
+      <label for="localisation-postcode" class="visually-hidden">{{ 'Enter your postcode'|t }}</label>
+      <input
+        type="text"
+        id="localisation-postcode"
+        name="postcode"
+        class="localisation-search__input"
+        placeholder="{{ 'Enter your postcode'|t }}"
+        value="{{ postcode }}"
+        pattern="[A-Za-z]{1,2}[0-9Rr][0-9A-Za-z]?\s?[0-9][A-Za-z]{2}"
+        title="{{ 'Please enter a valid UK postcode'|t }}"
+        autocomplete="postal-code"
+        required
+      >
+      <button type="submit" class="localisation-search__submit btn btn--primary">
+        {{ 'Search'|t }}
+      </button>
+    </div>
+  </form>
+
+  <div class="localisation-search__results" data-localisation-results>
+    {% if results %}
+      {% include '@localgov_localisation/localgov-localisation-results.html.twig' with {
+        results: results,
+        postcode: postcode,
+      } %}
+    {% endif %}
+  </div>
+</div>

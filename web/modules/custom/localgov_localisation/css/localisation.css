@@ -1,0 +1,284 @@
+/* ==========================================================================
+   LocalGov Localisation - Component Styles
+   ========================================================================== */
+
+/* Search form */
+.localisation-search {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem 0;
+}
+
+.localisation-search__intro {
+  margin-bottom: 1.5rem;
+}
+
+.localisation-search__input-group {
+  display: flex;
+  gap: 0.5rem;
+  max-width: 500px;
+}
+
+.localisation-search__input {
+  flex-grow: 1;
+  padding: 0.75rem 1rem;
+  border: 2px solid #757575;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.localisation-search__input:focus {
+  outline: 3px solid #ffdd00;
+  outline-offset: 0;
+  border-color: #1b3a4b;
+}
+
+.localisation-search__submit {
+  padding: 0.75rem 1.5rem;
+  background-color: #1b3a4b;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.localisation-search__submit:hover {
+  background-color: color-mix(in srgb, #1b3a4b, black 15%);
+}
+
+/* Postcode block (compact version) */
+.postcode-block {
+  padding: 1.5rem;
+  background-color: #f5f5f5;
+  border-radius: 8px;
+}
+
+.postcode-block__title {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  color: #1b3a4b;
+}
+
+.postcode-block__desc {
+  font-size: 0.875rem;
+  color: #424242;
+  margin-bottom: 1rem;
+}
+
+.postcode-block__input-group {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.postcode-block__input {
+  flex-grow: 1;
+  padding: 0.5rem 0.75rem;
+  border: 2px solid #757575;
+  border-radius: 4px;
+  font-size: 0.875rem;
+}
+
+.postcode-block__submit {
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+}
+
+/* Results */
+.localisation-results {
+  margin-top: 2rem;
+}
+
+.localisation-results__title {
+  margin-bottom: 1.5rem;
+  color: #1b3a4b;
+}
+
+.localisation-results__section {
+  margin-bottom: 2.5rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.localisation-results__section:last-child {
+  border-bottom: none;
+}
+
+.localisation-results__heading {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #1b3a4b;
+  margin-bottom: 1rem;
+}
+
+.localisation-results__heading svg {
+  flex-shrink: 0;
+  color: #5b8ba5;
+}
+
+.localisation-results__cards {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+}
+
+/* Councillor cards */
+.councillor-card {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+}
+
+.councillor-card__photo {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.councillor-card__name {
+  margin: 0 0 0.25rem;
+  font-size: 1rem;
+}
+
+.councillor-card__party,
+.councillor-card__ward {
+  margin: 0;
+  font-size: 0.875rem;
+  color: #757575;
+}
+
+.councillor-card__email {
+  font-size: 0.875rem;
+  color: #1b3a4b;
+}
+
+/* Collection items */
+.collection-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  margin-bottom: 0.5rem;
+}
+
+.collection-item__type {
+  font-weight: 600;
+}
+
+.collection-item__date {
+  font-size: 0.875rem;
+  color: #757575;
+}
+
+/* Planning items */
+.planning-item {
+  padding: 1rem;
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  margin-bottom: 0.75rem;
+}
+
+.planning-item__ref {
+  margin: 0 0 0.25rem;
+  font-size: 1rem;
+}
+
+.planning-item__ref a {
+  color: #1b3a4b;
+}
+
+.planning-item__desc {
+  margin: 0 0 0.5rem;
+  font-size: 0.875rem;
+  color: #424242;
+}
+
+.planning-item__address {
+  font-size: 0.875rem;
+  color: #757575;
+  margin: 0 0 0.5rem;
+}
+
+.planning-item__status {
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: 4px;
+  background-color: #e3f2fd;
+  color: #0d47a1;
+}
+
+/* Event results */
+.event-result {
+  padding: 0.75rem 0;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.event-result:last-child {
+  border-bottom: none;
+}
+
+.event-result__title {
+  margin: 0 0 0.25rem;
+  font-size: 1rem;
+}
+
+.event-result__title a {
+  color: #1b3a4b;
+  text-decoration: none;
+}
+
+.event-result__title a:hover {
+  text-decoration: underline;
+}
+
+.event-result__date,
+.event-result__venue {
+  margin: 0;
+  font-size: 0.875rem;
+  color: #757575;
+}
+
+/* Democracy items */
+.democracy-item {
+  padding: 0.75rem 0;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.democracy-item:last-child {
+  border-bottom: none;
+}
+
+.democracy-item h4 {
+  margin: 0 0 0.25rem;
+}
+
+.democracy-item p {
+  margin: 0;
+  font-size: 0.875rem;
+  color: #757575;
+}
+
+/* Loading state */
+.localisation-search--loading .localisation-search__submit {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.localisation-results__loading {
+  text-align: center;
+  padding: 2rem;
+  color: #757575;
+}

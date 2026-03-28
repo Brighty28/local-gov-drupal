@@ -1,0 +1,4 @@
+administer localgov localisation:
+  title: 'Administer LocalGov Localisation'
+  description: 'Configure the Localisation API connection and settings.'
+  restrict access: true

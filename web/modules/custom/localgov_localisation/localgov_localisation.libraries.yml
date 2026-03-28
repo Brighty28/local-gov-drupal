@@ -1,0 +1,11 @@
+localisation:
+  version: 1.x
+  css:
+    component:
+      css/localisation.css: {}
+  js:
+    js/localisation.js: {}
+  dependencies:
+    - core/drupal
+    - core/once
+    - core/drupal.ajax
