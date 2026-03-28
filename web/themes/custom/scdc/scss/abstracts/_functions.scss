@@ -2,6 +2,8 @@
 // SCDC Functions
 // ==========================================================================
 
+@use 'sass:map';
+
 // Convert px to rem
 @function rem($pixels, $base: 16) {
   @return calc($pixels / $base) * 1rem;
@@ -29,8 +31,8 @@
     'tooltip': $z-index-tooltip,
   );
 
-  @if map-has-key($layers, $layer) {
-    @return map-get($layers, $layer);
+  @if map.has-key($layers, $layer) {
+    @return map.get($layers, $layer);
   }
 
   @warn "Unknown z-index layer: #{$layer}";

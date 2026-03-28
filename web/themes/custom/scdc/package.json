@@ -6,9 +6,9 @@
   "scripts": {
     "build": "npm run sass:build",
     "watch": "npm run sass:watch",
-    "sass:build": "sass scss/main.scss css/style.css --style=compressed --source-map --load-path=scss",
-    "sass:dev": "sass scss/main.scss css/style.css --source-map --load-path=scss",
-    "sass:watch": "sass --watch scss/main.scss:css/style.css --source-map --load-path=scss",
+    "sass:build": "sass scss/main.scss css/style.css --style=compressed --source-map --load-path=scss --silence-deprecation=import",
+    "sass:dev": "sass scss/main.scss css/style.css --source-map --load-path=scss --silence-deprecation=import",
+    "sass:watch": "sass --watch scss/main.scss:css/style.css --source-map --load-path=scss --silence-deprecation=import",
     "lint:scss": "stylelint 'scss/**/*.scss'",
     "lint:js": "eslint js/**/*.js"
   },
