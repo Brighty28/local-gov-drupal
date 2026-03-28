@@ -1,0 +1,75 @@
+// ==========================================================================
+// Cards
+// ==========================================================================
+
+.card {
+  @extend %card-base;
+  display: flex;
+  flex-direction: column;
+  transition: box-shadow $transition-speed-base $transition-easing;
+
+  &:hover {
+    box-shadow: $shadow-md;
+  }
+
+  &__image {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+  }
+
+  &__body {
+    padding: $spacing-md;
+    flex-grow: 1;
+  }
+
+  &__title {
+    margin-top: 0;
+    margin-bottom: $spacing-sm;
+    font-size: $font-size-xl;
+    font-weight: $font-weight-semi;
+
+    a {
+      color: $color-primary;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  &__text {
+    margin-bottom: $spacing-md;
+    color: $color-grey-dark;
+    font-size: $font-size-sm;
+  }
+
+  &__meta {
+    padding: $spacing-sm $spacing-md;
+    border-top: $border-width solid $border-color;
+    font-size: $font-size-xs;
+    color: $color-grey;
+  }
+
+  &__footer {
+    padding: $spacing-sm $spacing-md;
+    border-top: $border-width solid $border-color;
+    margin-top: auto;
+  }
+}
+
+// Card grid layout
+.card-grid {
+  display: grid;
+  gap: $spacing-lg;
+  grid-template-columns: 1fr;
+
+  @include respond-to('narrow') {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include respond-to('wide') {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

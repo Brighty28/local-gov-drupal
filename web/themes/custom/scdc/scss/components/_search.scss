@@ -1,0 +1,54 @@
+// ==========================================================================
+// Search
+// ==========================================================================
+
+.search-form {
+  display: flex;
+  gap: $spacing-sm;
+  max-width: 600px;
+
+  &__input {
+    flex-grow: 1;
+  }
+
+  &__submit {
+    @include button-base;
+    @include button-variant($color-primary, $color-white);
+    flex-shrink: 0;
+  }
+}
+
+.search-results {
+  &__item {
+    padding: $spacing-lg 0;
+    border-bottom: $border-width solid $border-color;
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  &__title {
+    margin-top: 0;
+    margin-bottom: $spacing-xs;
+
+    a {
+      color: $color-primary;
+    }
+  }
+
+  &__snippet {
+    color: $color-grey-dark;
+    margin-bottom: $spacing-xs;
+
+    strong {
+      background-color: lighten($color-accent, 35%);
+      padding: 0 2px;
+    }
+  }
+
+  &__url {
+    font-size: $font-size-sm;
+    color: $color-grey;
+  }
+}

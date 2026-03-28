@@ -1,0 +1,52 @@
+<?php
+
+/**
+ * @file
+ * Functions to support theming in the SCDC theme.
+ */
+
+use Drupal\Core\Form\FormStateInterface;
+
+/**
+ * Implements hook_preprocess_HOOK() for html templates.
+ */
+function scdc_preprocess_html(&$variables) {
+  // Add a body class for the active theme.
+  $variables['attributes']['class'][] = 'scdc-theme';
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for page templates.
+ */
+function scdc_preprocess_page(&$variables) {
+  // Add any page-level preprocessing here.
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for node templates.
+ */
+function scdc_preprocess_node(&$variables) {
+  // Add any node-level preprocessing here.
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function scdc_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  // Add placeholder text to search form.
+  if ($form_id === 'search_block_form') {
+    $form['keys']['#attributes']['placeholder'] = t('Search this site...');
+  }
+}
+
+/**
+ * Implements hook_theme_suggestions_HOOK_alter() for page templates.
+ */
+function scdc_theme_suggestions_page_alter(array &$suggestions, array $variables) {
+  // Add content type specific page template suggestions.
+  if ($node = \Drupal::routeMatch()->getParameter('node')) {
+    if (is_object($node)) {
+      $suggestions[] = 'page__' . $node->bundle();
+    }
+  }
+}

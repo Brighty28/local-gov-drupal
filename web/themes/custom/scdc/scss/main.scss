@@ -1,0 +1,57 @@
+// ==========================================================================
+// SCDC Theme - Main Stylesheet
+// 7-1 SASS Architecture
+// ==========================================================================
+//
+// This file serves as the entry point for all SCSS imports.
+// It follows the 7-1 pattern:
+//
+// abstracts/ - Variables, functions, mixins, placeholders (no CSS output)
+// vendors/   - Third-party stylesheets
+// base/      - Reset, typography, animations
+// layout/    - Header, footer, navigation, grid, sidebar
+// components/ - Buttons, cards, forms, alerts, etc.
+// pages/     - Page-specific styles
+// themes/    - Theme variations (default, high-contrast)
+//
+
+// 1. Abstracts (must be first - no output, used by everything else)
+@use 'abstracts/variables' as *;
+@use 'abstracts/functions' as *;
+@use 'abstracts/mixins' as *;
+@use 'abstracts/placeholders' as *;
+
+// 2. Vendors
+@use 'vendors/index' as *;
+
+// 3. Base
+@use 'base/reset';
+@use 'base/typography';
+@use 'base/animations';
+
+// 4. Layout
+@use 'layout/grid';
+@use 'layout/header';
+@use 'layout/navigation';
+@use 'layout/footer';
+@use 'layout/sidebar';
+
+// 5. Components
+@use 'components/buttons';
+@use 'components/cards';
+@use 'components/forms';
+@use 'components/breadcrumbs';
+@use 'components/alerts';
+@use 'components/accordion';
+@use 'components/search';
+@use 'components/tables';
+@use 'components/pagination';
+
+// 6. Pages
+@use 'pages/home';
+@use 'pages/services';
+@use 'pages/contact';
+
+// 7. Themes
+@use 'themes/default';
+@use 'themes/high-contrast';

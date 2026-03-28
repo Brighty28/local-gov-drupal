@@ -1,0 +1,49 @@
+// ==========================================================================
+// Services landing page
+// ==========================================================================
+
+.page--services {
+  .service-list {
+    @include container;
+
+    &__category {
+      margin-bottom: $spacing-3xl;
+    }
+
+    &__heading {
+      padding-bottom: $spacing-sm;
+      border-bottom: 3px solid $color-primary;
+      margin-bottom: $spacing-lg;
+    }
+
+    &__items {
+      @extend %list-reset;
+      display: grid;
+      gap: $spacing-md;
+      grid-template-columns: 1fr;
+
+      @include respond-to('tablet') {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      @include respond-to('wide') {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    &__link {
+      display: block;
+      padding: $spacing-md;
+      border: $border-width solid $border-color;
+      border-radius: $border-radius-sm;
+      color: $color-primary;
+      text-decoration: none;
+      transition: all $transition-speed-fast $transition-easing;
+
+      &:hover {
+        border-color: $color-primary;
+        box-shadow: $shadow-sm;
+      }
+    }
+  }
+}

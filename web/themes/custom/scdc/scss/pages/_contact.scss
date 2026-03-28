@@ -1,0 +1,32 @@
+// ==========================================================================
+// Contact page
+// ==========================================================================
+
+.page--contact {
+  .contact-info {
+    @include container;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: $spacing-xl;
+
+    @include respond-to('tablet') {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    &__card {
+      @extend %card-base;
+      padding: $spacing-lg;
+    }
+
+    &__title {
+      color: $color-primary;
+      margin-top: 0;
+    }
+
+    &__detail {
+      display: flex;
+      gap: $spacing-sm;
+      margin-bottom: $spacing-sm;
+    }
+  }
+}

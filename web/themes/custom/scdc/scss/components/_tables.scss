@@ -1,0 +1,35 @@
+// ==========================================================================
+// Tables
+// ==========================================================================
+
+.table,
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: $spacing-lg;
+
+  th,
+  td {
+    padding: $spacing-sm $spacing-md;
+    text-align: left;
+    border-bottom: $border-width solid $border-color;
+  }
+
+  th {
+    font-weight: $font-weight-semi;
+    background-color: $color-off-white;
+    color: $color-black;
+  }
+
+  tbody tr {
+    &:hover {
+      background-color: rgba($color-primary, 0.03);
+    }
+  }
+
+  // Responsive table wrapper
+  &-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}

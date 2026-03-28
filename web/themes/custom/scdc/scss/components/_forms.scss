@@ -1,0 +1,114 @@
+// ==========================================================================
+// Forms
+// ==========================================================================
+
+.form-item {
+  margin-bottom: $spacing-lg;
+
+  label {
+    display: block;
+    margin-bottom: $spacing-xs;
+    font-weight: $font-weight-semi;
+    color: $color-black;
+  }
+
+  .description {
+    margin-top: $spacing-xs;
+    font-size: $font-size-sm;
+    color: $color-grey;
+  }
+}
+
+.form-text,
+.form-email,
+.form-tel,
+.form-url,
+.form-search,
+.form-number,
+.form-textarea,
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="url"],
+input[type="search"],
+input[type="number"],
+input[type="password"],
+textarea,
+select {
+  display: block;
+  width: 100%;
+  padding: $spacing-sm $spacing-md;
+  font-size: $font-size-md;
+  line-height: $line-height-base;
+  color: $color-black;
+  background-color: $color-white;
+  border: 2px solid $color-grey;
+  border-radius: $border-radius-sm;
+  transition: border-color $transition-speed-fast $transition-easing;
+
+  &:focus {
+    @include focus-style;
+    border-color: $color-primary;
+  }
+
+  &:disabled {
+    background-color: $color-off-white;
+    cursor: not-allowed;
+  }
+
+  &.error {
+    border-color: $color-error;
+  }
+}
+
+textarea {
+  min-height: 150px;
+  resize: vertical;
+}
+
+select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23424242' stroke-width='2' fill='none'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right $spacing-md center;
+  padding-right: $spacing-2xl;
+}
+
+// Checkboxes and radios
+.form-type-checkbox,
+.form-type-radio {
+  display: flex;
+  align-items: flex-start;
+  gap: $spacing-sm;
+
+  input {
+    width: auto;
+    margin-top: 4px;
+  }
+
+  label {
+    display: inline;
+    font-weight: $font-weight-regular;
+  }
+}
+
+// Error messages
+.form-item--error-message {
+  color: $color-error;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-semi;
+  margin-top: $spacing-xs;
+}
+
+// Fieldset
+fieldset {
+  border: $border-width solid $border-color;
+  border-radius: $border-radius-sm;
+  padding: $spacing-md;
+  margin-bottom: $spacing-lg;
+
+  legend {
+    font-weight: $font-weight-bold;
+    padding: 0 $spacing-xs;
+  }
+}

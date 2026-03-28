@@ -1,0 +1,41 @@
+// ==========================================================================
+// Alerts / Status Messages
+// ==========================================================================
+
+.messages,
+.alert {
+  padding: $spacing-md $spacing-lg;
+  margin-bottom: $spacing-lg;
+  border-left: 4px solid;
+  border-radius: $border-radius-sm;
+
+  &--status,
+  &--success {
+    background-color: lighten($color-success, 50%);
+    border-color: $color-success;
+    color: darken($color-success, 10%);
+  }
+
+  &--warning {
+    background-color: lighten($color-warning, 35%);
+    border-color: $color-warning;
+    color: darken($color-warning, 30%);
+  }
+
+  &--error {
+    background-color: lighten($color-error, 45%);
+    border-color: $color-error;
+    color: darken($color-error, 5%);
+  }
+
+  &--info {
+    background-color: lighten($color-info, 45%);
+    border-color: $color-info;
+    color: darken($color-info, 5%);
+  }
+
+  a {
+    color: inherit;
+    font-weight: $font-weight-bold;
+  }
+}

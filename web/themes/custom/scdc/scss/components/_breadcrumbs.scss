@@ -1,0 +1,47 @@
+// ==========================================================================
+// Breadcrumbs
+// ==========================================================================
+
+.breadcrumb {
+  padding: $spacing-md 0;
+  background-color: $color-off-white;
+
+  &__list {
+    @extend %list-reset;
+    @include container;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: $spacing-xs;
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+    font-size: $font-size-sm;
+
+    &::after {
+      content: '/';
+      margin-left: $spacing-xs;
+      color: $color-grey;
+    }
+
+    &:last-child::after {
+      content: none;
+    }
+  }
+
+  &__link {
+    color: $color-link;
+
+    &:hover {
+      color: $color-link-hover;
+    }
+
+    &[aria-current="page"] {
+      color: $color-black;
+      text-decoration: none;
+      font-weight: $font-weight-semi;
+    }
+  }
+}

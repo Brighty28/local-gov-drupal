@@ -1,0 +1,57 @@
+// ==========================================================================
+// Header
+// ==========================================================================
+
+.site-header {
+  background-color: $color-primary;
+  color: $color-white;
+
+  &__top {
+    background-color: $color-primary-dark;
+    padding: $spacing-xs 0;
+  }
+
+  &__main {
+    @include container;
+    @include flex-between;
+    padding-top: $spacing-md;
+    padding-bottom: $spacing-md;
+  }
+
+  &__branding {
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+  }
+
+  &__logo {
+    max-height: 60px;
+    width: auto;
+
+    @include respond-to('tablet') {
+      max-height: 80px;
+    }
+  }
+
+  &__site-name {
+    font-size: $font-size-xl;
+    font-weight: $font-weight-bold;
+    color: $color-white;
+    text-decoration: none;
+
+    @include respond-to('tablet') {
+      font-size: $font-size-2xl;
+    }
+
+    &:hover {
+      color: $color-white;
+      text-decoration: underline;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+  }
+}

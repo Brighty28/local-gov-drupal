@@ -1,0 +1,46 @@
+global-styling:
+  version: 1.x
+  css:
+    theme:
+      css/style.css: {}
+
+global-scripts:
+  version: 1.x
+  js:
+    js/scdc.js: {}
+  dependencies:
+    - core/drupal
+    - core/once
+
+navigation:
+  version: 1.x
+  css:
+    component:
+      css/components/navigation.css: {}
+  js:
+    js/navigation.js: {}
+  dependencies:
+    - core/drupal
+    - core/once
+
+search:
+  version: 1.x
+  css:
+    component:
+      css/components/search.css: {}
+  js:
+    js/search.js: {}
+  dependencies:
+    - core/drupal
+    - core/once
+
+accordion:
+  version: 1.x
+  css:
+    component:
+      css/components/accordion.css: {}
+  js:
+    js/accordion.js: {}
+  dependencies:
+    - core/drupal
+    - core/once

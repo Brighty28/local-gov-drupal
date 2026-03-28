@@ -1,0 +1,40 @@
+// ==========================================================================
+// SCDC Placeholders (extendable patterns)
+// ==========================================================================
+
+%container {
+  width: 100%;
+  max-width: $max-width;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: $spacing-md;
+  padding-right: $spacing-md;
+}
+
+%list-reset {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+%link-reset {
+  color: inherit;
+  text-decoration: none;
+}
+
+%button-reset {
+  appearance: none;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font: inherit;
+}
+
+%card-base {
+  background-color: $color-white;
+  border: $border-width solid $border-color;
+  border-radius: $border-radius-md;
+  box-shadow: $shadow-sm;
+  overflow: hidden;
+}

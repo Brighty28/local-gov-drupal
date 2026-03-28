@@ -1,0 +1,51 @@
+// ==========================================================================
+// Pagination
+// ==========================================================================
+
+.pager {
+  margin: $spacing-2xl 0;
+  text-align: center;
+
+  &__items {
+    @extend %list-reset;
+    display: inline-flex;
+    gap: $spacing-xs;
+  }
+
+  &__item {
+    a,
+    &.is-active span {
+      display: inline-flex;
+      @include flex-center;
+      min-width: 40px;
+      height: 40px;
+      padding: $spacing-xs $spacing-sm;
+      border: $border-width solid $border-color;
+      border-radius: $border-radius-sm;
+      text-decoration: none;
+      font-size: $font-size-sm;
+      transition: all $transition-speed-fast $transition-easing;
+    }
+
+    a {
+      color: $color-primary;
+
+      &:hover {
+        background-color: $color-primary;
+        color: $color-white;
+        border-color: $color-primary;
+      }
+
+      &:focus {
+        @include focus-style;
+      }
+    }
+
+    &.is-active span {
+      background-color: $color-primary;
+      color: $color-white;
+      border-color: $color-primary;
+      font-weight: $font-weight-bold;
+    }
+  }
+}

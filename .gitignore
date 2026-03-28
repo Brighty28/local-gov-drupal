@@ -1,0 +1,33 @@
+# Dependencies
+/vendor/
+/web/core/
+/web/modules/contrib/
+/web/themes/contrib/
+/web/profiles/contrib/
+/web/libraries/
+node_modules/
+
+# Compiled CSS (rebuild from SCSS)
+web/themes/custom/scdc/css/style.css
+web/themes/custom/scdc/css/style.css.map
+
+# Drupal files
+/web/sites/*/files/
+/web/sites/*/private/
+/web/sites/*/settings.local.php
+/web/sites/*/services.yml
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment
+.env
+.env.local

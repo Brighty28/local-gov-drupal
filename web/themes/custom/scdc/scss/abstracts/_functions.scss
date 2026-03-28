@@ -1,0 +1,38 @@
+// ==========================================================================
+// SCDC Functions
+// ==========================================================================
+
+// Convert px to rem
+@function rem($pixels, $base: 16) {
+  @return calc($pixels / $base) * 1rem;
+}
+
+// Convert px to em
+@function em($pixels, $base: 16) {
+  @return calc($pixels / $base) * 1em;
+}
+
+// Get spacing multiplier
+@function spacing($multiplier) {
+  @return $spacing-unit * $multiplier;
+}
+
+// Get z-index from scale
+@function z($layer) {
+  $layers: (
+    'dropdown': $z-index-dropdown,
+    'sticky': $z-index-sticky,
+    'fixed': $z-index-fixed,
+    'overlay': $z-index-overlay,
+    'modal': $z-index-modal,
+    'popover': $z-index-popover,
+    'tooltip': $z-index-tooltip,
+  );
+
+  @if map-has-key($layers, $layer) {
+    @return map-get($layers, $layer);
+  }
+
+  @warn "Unknown z-index layer: #{$layer}";
+  @return auto;
+}

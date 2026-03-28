@@ -1,0 +1,171 @@
+// ==========================================================================
+// SCDC Mixins
+// ==========================================================================
+
+// --------------------------------------------------------------------------
+// Responsive breakpoints
+// --------------------------------------------------------------------------
+
+@mixin respond-to($breakpoint) {
+  @if $breakpoint == 'mobile' {
+    @media (min-width: $breakpoint-mobile) { @content; }
+  } @else if $breakpoint == 'narrow' {
+    @media (min-width: $breakpoint-narrow) { @content; }
+  } @else if $breakpoint == 'tablet' {
+    @media (min-width: $breakpoint-tablet) { @content; }
+  } @else if $breakpoint == 'wide' {
+    @media (min-width: $breakpoint-wide) { @content; }
+  } @else if $breakpoint == 'x-wide' {
+    @media (min-width: $breakpoint-x-wide) { @content; }
+  }
+}
+
+// --------------------------------------------------------------------------
+// Typography
+// --------------------------------------------------------------------------
+
+@mixin font-size($size, $line-height: $line-height-base) {
+  font-size: $size;
+  line-height: $line-height;
+}
+
+@mixin heading-style($size, $weight: $font-weight-bold) {
+  font-family: $font-family-primary;
+  font-size: $size;
+  font-weight: $weight;
+  line-height: $line-height-tight;
+  color: $color-black;
+}
+
+// --------------------------------------------------------------------------
+// Layout
+// --------------------------------------------------------------------------
+
+@mixin container($max-width: $max-width) {
+  width: 100%;
+  max-width: $max-width;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: $spacing-md;
+  padding-right: $spacing-md;
+
+  @include respond-to('tablet') {
+    padding-left: $spacing-lg;
+    padding-right: $spacing-lg;
+  }
+}
+
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+// --------------------------------------------------------------------------
+// Focus state (GDS / WCAG compliant)
+// --------------------------------------------------------------------------
+
+@mixin focus-style {
+  outline: 3px solid $color-focus;
+  outline-offset: 0;
+  box-shadow: inset 0 0 0 2px $color-focus-text;
+}
+
+@mixin focus-reset {
+  outline: none;
+  box-shadow: none;
+}
+
+// --------------------------------------------------------------------------
+// Buttons
+// --------------------------------------------------------------------------
+
+@mixin button-base {
+  display: inline-block;
+  padding: $spacing-sm $spacing-md;
+  font-family: $font-family-primary;
+  font-size: $font-size-md;
+  font-weight: $font-weight-semi;
+  line-height: $line-height-tight;
+  text-align: center;
+  text-decoration: none;
+  border: $border-width solid transparent;
+  border-radius: $border-radius-sm;
+  cursor: pointer;
+  transition: background-color $transition-speed-base $transition-easing,
+              color $transition-speed-base $transition-easing,
+              border-color $transition-speed-base $transition-easing;
+
+  &:focus {
+    @include focus-style;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+@mixin button-variant($bg, $color, $border: $bg) {
+  background-color: $bg;
+  color: $color;
+  border-color: $border;
+
+  &:hover,
+  &:active {
+    background-color: darken($bg, 10%);
+    border-color: darken($border, 10%);
+    color: $color;
+  }
+}
+
+// --------------------------------------------------------------------------
+// Visually hidden (accessible)
+// --------------------------------------------------------------------------
+
+@mixin visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+// --------------------------------------------------------------------------
+// Clearfix
+// --------------------------------------------------------------------------
+
+@mixin clearfix {
+  &::after {
+    content: '';
+    display: table;
+    clear: both;
+  }
+}
+
+// --------------------------------------------------------------------------
+// Truncate text
+// --------------------------------------------------------------------------
+
+@mixin truncate($lines: 1) {
+  @if $lines == 1 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  } @else {
+    display: -webkit-box;
+    -webkit-line-clamp: $lines;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}

@@ -1,0 +1,66 @@
+// ==========================================================================
+// Homepage
+// ==========================================================================
+
+.page--front {
+  .hero {
+    background-color: $color-primary;
+    color: $color-white;
+    padding: $spacing-3xl 0;
+
+    @include respond-to('tablet') {
+      padding: $spacing-4xl 0;
+    }
+
+    &__inner {
+      @include container;
+      max-width: $max-width-narrow;
+      text-align: center;
+    }
+
+    &__title {
+      font-size: $font-size-3xl;
+      color: $color-white;
+      margin-bottom: $spacing-md;
+
+      @include respond-to('tablet') {
+        font-size: $font-size-5xl;
+      }
+    }
+
+    &__text {
+      font-size: $font-size-lg;
+      margin-bottom: $spacing-xl;
+      opacity: 0.9;
+    }
+
+    &__search {
+      max-width: 500px;
+      margin: 0 auto;
+    }
+  }
+
+  .popular-services {
+    @include container;
+    padding-top: $spacing-3xl;
+    padding-bottom: $spacing-3xl;
+
+    &__title {
+      text-align: center;
+      margin-bottom: $spacing-2xl;
+    }
+  }
+
+  .news-section {
+    background-color: $color-off-white;
+    padding: $spacing-3xl 0;
+
+    &__inner {
+      @include container;
+    }
+
+    &__title {
+      margin-bottom: $spacing-2xl;
+    }
+  }
+}

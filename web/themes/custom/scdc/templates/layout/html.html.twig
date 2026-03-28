@@ -1,0 +1,35 @@
+{#
+/**
+ * @file
+ * SCDC theme implementation for the basic structure of a single HTML page.
+ *
+ * Variables:
+ * - logged_in: Flag for authenticated user status.
+ * - root_path: The root path of the current page.
+ * - node_type: The content type for the current node, if the page is a node.
+ * - head_title: List of text elements that make up the head title.
+ * - page_top: Initial rendered markup.
+ * - page: The rendered page markup.
+ * - page_bottom: Closing rendered markup.
+ * - db_offline: Flag for site being in maintenance mode.
+ * - placeholder_token: The token for generating placeholder markup.
+ */
+#}
+<!DOCTYPE html>
+<html{{ html_attributes }}>
+  <head>
+    <head-placeholder token="{{ placeholder_token }}">
+    <title>{{ head_title|safe_join(' | ') }}</title>
+    <css-placeholder token="{{ placeholder_token }}">
+    <js-placeholder token="{{ placeholder_token }}">
+  </head>
+  <body{{ attributes.addClass(body_classes) }}>
+    <a href="#main-content" class="visually-hidden focusable skip-link">
+      {{ 'Skip to main content'|t }}
+    </a>
+    {{ page_top }}
+    {{ page }}
+    {{ page_bottom }}
+    <js-bottom-placeholder token="{{ placeholder_token }}">
+  </body>
+</html>

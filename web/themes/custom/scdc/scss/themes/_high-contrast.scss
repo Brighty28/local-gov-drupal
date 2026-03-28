@@ -1,0 +1,22 @@
+// ==========================================================================
+// High Contrast theme (WCAG AAA)
+// ==========================================================================
+
+@media (prefers-contrast: high) {
+  .scdc-theme {
+    --color-primary: #003d36;
+    --color-bg: #ffffff;
+    --color-text: #000000;
+    --color-border: #000000;
+
+    a {
+      text-decoration: underline;
+      text-decoration-thickness: 2px;
+    }
+
+    .btn,
+    .button {
+      border-width: 2px;
+    }
+  }
+}

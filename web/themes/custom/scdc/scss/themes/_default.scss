@@ -1,0 +1,20 @@
+// ==========================================================================
+// Default theme
+// ==========================================================================
+
+// This file contains the default theme colour application.
+// Additional themes (e.g. high-contrast) can be added as siblings.
+
+.scdc-theme {
+  --color-primary: #{$color-primary};
+  --color-primary-light: #{$color-primary-light};
+  --color-primary-dark: #{$color-primary-dark};
+  --color-secondary: #{$color-secondary};
+  --color-accent: #{$color-accent};
+  --color-focus: #{$color-focus};
+  --color-bg: #{$color-white};
+  --color-bg-alt: #{$color-off-white};
+  --color-text: #{$color-black};
+  --color-text-muted: #{$color-grey};
+  --color-border: #{$color-grey-light};
+}

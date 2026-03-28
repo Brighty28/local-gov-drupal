@@ -1,0 +1,95 @@
+// ==========================================================================
+// Typography
+// ==========================================================================
+
+h1,
+.h1 {
+  @include heading-style($font-size-4xl);
+  margin-top: 0;
+  margin-bottom: $spacing-lg;
+
+  @include respond-to('tablet') {
+    @include heading-style($font-size-5xl);
+  }
+}
+
+h2,
+.h2 {
+  @include heading-style($font-size-3xl);
+  margin-top: $spacing-3xl;
+  margin-bottom: $spacing-md;
+}
+
+h3,
+.h3 {
+  @include heading-style($font-size-2xl);
+  margin-top: $spacing-2xl;
+  margin-bottom: $spacing-md;
+}
+
+h4,
+.h4 {
+  @include heading-style($font-size-xl);
+  margin-top: $spacing-xl;
+  margin-bottom: $spacing-sm;
+}
+
+h5,
+.h5 {
+  @include heading-style($font-size-lg);
+  margin-top: $spacing-lg;
+  margin-bottom: $spacing-sm;
+}
+
+h6,
+.h6 {
+  @include heading-style($font-size-md, $font-weight-semi);
+  margin-top: $spacing-lg;
+  margin-bottom: $spacing-sm;
+}
+
+p {
+  margin-top: 0;
+  margin-bottom: $spacing-md;
+}
+
+.lead {
+  font-size: $font-size-xl;
+  line-height: $line-height-loose;
+  color: $color-grey-dark;
+}
+
+small,
+.small {
+  font-size: $font-size-sm;
+}
+
+strong,
+.bold {
+  font-weight: $font-weight-bold;
+}
+
+blockquote {
+  margin: $spacing-lg 0;
+  padding: $spacing-md $spacing-lg;
+  border-left: 4px solid $color-primary;
+  background-color: $color-off-white;
+  font-style: italic;
+
+  p:last-child {
+    margin-bottom: 0;
+  }
+}
+
+code,
+pre {
+  font-family: $font-family-monospace;
+  font-size: $font-size-sm;
+}
+
+pre {
+  padding: $spacing-md;
+  background-color: $color-off-white;
+  border-radius: $border-radius-sm;
+  overflow-x: auto;
+}

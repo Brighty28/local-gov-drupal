@@ -1,0 +1,195 @@
+{#
+/**
+ * @file
+ * SCDC theme implementation to display a single page.
+ *
+ * Available variables:
+ * - node: The node entity with limited access to object properties and methods.
+ * - content: All block content assigned to regions.
+ * - page: All regions of the page.
+ *
+ * Regions:
+ * - page.header
+ * - page.primary_menu
+ * - page.secondary_menu
+ * - page.breadcrumb
+ * - page.highlighted
+ * - page.help
+ * - page.banner
+ * - page.tabs
+ * - page.pre_content
+ * - page.content_top
+ * - page.content
+ * - page.content_bottom
+ * - page.sidebar_first
+ * - page.sidebar_second
+ * - page.footer_first
+ * - page.footer_second
+ * - page.footer_third
+ * - page.footer_fourth
+ * - page.footer
+ */
+#}
+
+<div class="layout-container">
+
+  {# Header #}
+  <header class="site-header" role="banner">
+    {% if page.secondary_menu %}
+      <div class="site-header__top">
+        <nav class="secondary-nav" aria-label="{{ 'Secondary navigation'|t }}">
+          {{ page.secondary_menu }}
+        </nav>
+      </div>
+    {% endif %}
+
+    <div class="site-header__main">
+      <div class="site-header__branding">
+        {% if page.header %}
+          {{ page.header }}
+        {% endif %}
+      </div>
+      <div class="site-header__actions">
+        {# Search toggle, accessibility tools, etc. #}
+      </div>
+    </div>
+
+    {% if page.primary_menu %}
+      <nav class="primary-nav" aria-label="{{ 'Main navigation'|t }}">
+        <div class="primary-nav__wrapper">
+          <button class="primary-nav__toggle" aria-expanded="false" aria-controls="primary-menu">
+            <span class="primary-nav__toggle-text">{{ 'Menu'|t }}</span>
+          </button>
+          {{ page.primary_menu }}
+        </div>
+      </nav>
+    {% endif %}
+  </header>
+
+  {# Breadcrumb #}
+  {% if page.breadcrumb %}
+    <div class="breadcrumb" role="navigation" aria-label="{{ 'Breadcrumb'|t }}">
+      {{ page.breadcrumb }}
+    </div>
+  {% endif %}
+
+  {# Banner #}
+  {% if page.banner %}
+    <div class="banner">
+      {{ page.banner }}
+    </div>
+  {% endif %}
+
+  {# Highlighted #}
+  {% if page.highlighted %}
+    <div class="highlighted">
+      <aside class="container" role="complementary">
+        {{ page.highlighted }}
+      </aside>
+    </div>
+  {% endif %}
+
+  {# Help #}
+  {% if page.help %}
+    <div class="help">
+      <div class="container">
+        {{ page.help }}
+      </div>
+    </div>
+  {% endif %}
+
+  {# Main content #}
+  <main role="main" id="main-content" class="main-content">
+    <a id="main-content-anchor" tabindex="-1"></a>
+
+    {# Tabs #}
+    {% if page.tabs %}
+      <div class="tabs-wrapper container">
+        {{ page.tabs }}
+      </div>
+    {% endif %}
+
+    {# Pre content #}
+    {% if page.pre_content %}
+      <div class="pre-content">
+        {{ page.pre_content }}
+      </div>
+    {% endif %}
+
+    {# Content top #}
+    {% if page.content_top %}
+      <div class="content-top">
+        <div class="container">
+          {{ page.content_top }}
+        </div>
+      </div>
+    {% endif %}
+
+    <div class="container">
+      <div class="layout-content{% if page.sidebar_first or page.sidebar_second %} layout-sidebar{% endif %}">
+        {# Sidebar first #}
+        {% if page.sidebar_first %}
+          <aside class="sidebar sidebar--first" role="complementary">
+            {{ page.sidebar_first }}
+          </aside>
+        {% endif %}
+
+        {# Content #}
+        <div class="content-area">
+          {{ page.content }}
+        </div>
+
+        {# Sidebar second #}
+        {% if page.sidebar_second %}
+          <aside class="sidebar sidebar--second" role="complementary">
+            {{ page.sidebar_second }}
+          </aside>
+        {% endif %}
+      </div>
+    </div>
+
+    {# Content bottom #}
+    {% if page.content_bottom %}
+      <div class="content-bottom">
+        <div class="container">
+          {{ page.content_bottom }}
+        </div>
+      </div>
+    {% endif %}
+  </main>
+
+  {# Footer #}
+  <footer class="site-footer" role="contentinfo">
+    <div class="site-footer__main">
+      {% if page.footer_first %}
+        <div class="site-footer__column">
+          {{ page.footer_first }}
+        </div>
+      {% endif %}
+      {% if page.footer_second %}
+        <div class="site-footer__column">
+          {{ page.footer_second }}
+        </div>
+      {% endif %}
+      {% if page.footer_third %}
+        <div class="site-footer__column">
+          {{ page.footer_third }}
+        </div>
+      {% endif %}
+      {% if page.footer_fourth %}
+        <div class="site-footer__column">
+          {{ page.footer_fourth }}
+        </div>
+      {% endif %}
+    </div>
+
+    {% if page.footer %}
+      <div class="site-footer__bottom">
+        <div class="site-footer__bottom-inner">
+          {{ page.footer }}
+        </div>
+      </div>
+    {% endif %}
+  </footer>
+
+</div>
