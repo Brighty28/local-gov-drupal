@@ -11,27 +11,27 @@
 
   &--status,
   &--success {
-    background-color: lighten($color-success, 50%);
+    background-color: #e8f5e9;
     border-color: $color-success;
-    color: darken($color-success, 10%);
+    color: #1b5e20;
   }
 
   &--warning {
-    background-color: lighten($color-warning, 35%);
+    background-color: #fff8e1;
     border-color: $color-warning;
-    color: darken($color-warning, 30%);
+    color: #795600;
   }
 
   &--error {
-    background-color: lighten($color-error, 45%);
+    background-color: #ffebee;
     border-color: $color-error;
-    color: darken($color-error, 5%);
+    color: #b71c1c;
   }
 
   &--info {
-    background-color: lighten($color-info, 45%);
+    background-color: #e3f2fd;
     border-color: $color-info;
-    color: darken($color-info, 5%);
+    color: #0d47a1;
   }
 
   a {

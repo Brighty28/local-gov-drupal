@@ -119,8 +119,8 @@
 
   &:hover,
   &:active {
-    background-color: darken($bg, 10%);
-    border-color: darken($border, 10%);
+    background-color: color-mix(in srgb, $bg, black 15%);
+    border-color: color-mix(in srgb, $border, black 15%);
     color: $color;
   }
 }
