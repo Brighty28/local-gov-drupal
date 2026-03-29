@@ -45,11 +45,68 @@ class SettingsForm extends ConfigFormBase {
       '#required' => TRUE,
     ];
 
+    $form['api']['auth_method'] = [
+      '#type' => 'select',
+      '#title' => $this->t('Authentication Method'),
+      '#description' => $this->t('How to authenticate with the Localisation API.'),
+      '#options' => [
+        'api_key' => $this->t('API Key (X-Api-Key header)'),
+        'entra_id' => $this->t('Microsoft Entra ID (OAuth2 Client Credentials)'),
+        'none' => $this->t('None (public API)'),
+      ],
+      '#default_value' => $config->get('auth_method') ?? 'api_key',
+    ];
+
     $form['api']['api_key'] = [
       '#type' => 'textfield',
       '#title' => $this->t('API Key'),
-      '#description' => $this->t('API key for authentication. Leave blank if not required.'),
+      '#description' => $this->t('API key for authentication. Only used when "API Key" method is selected.'),
       '#default_value' => $config->get('api_key'),
+      '#states' => [
+        'visible' => [
+          ':input[name="auth_method"]' => ['value' => 'api_key'],
+        ],
+      ],
+    ];
+
+    // --- Microsoft Entra ID (Azure AD) ---
+    $form['entra'] = [
+      '#type' => 'details',
+      '#title' => $this->t('Microsoft Entra ID Authentication'),
+      '#description' => $this->t('OAuth2 Client Credentials flow. Register an App Registration in Azure Portal and grant it API permissions to the Localisation API.'),
+      '#open' => ($config->get('auth_method') === 'entra_id'),
+      '#states' => [
+        'visible' => [
+          ':input[name="auth_method"]' => ['value' => 'entra_id'],
+        ],
+      ],
+    ];
+
+    $form['entra']['entra_tenant_id'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Tenant ID'),
+      '#description' => $this->t('Your Azure AD / Entra ID Directory (tenant) ID. Found in Azure Portal > Entra ID > Overview.'),
+      '#default_value' => $config->get('entra_tenant_id'),
+    ];
+
+    $form['entra']['entra_client_id'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Client ID (Application ID)'),
+      '#description' => $this->t('The Application (client) ID of the App Registration you created for this Drupal site.'),
+      '#default_value' => $config->get('entra_client_id'),
+    ];
+
+    $form['entra']['entra_client_secret'] = [
+      '#type' => 'password',
+      '#title' => $this->t('Client Secret'),
+      '#description' => $this->t('The client secret value from Certificates & secrets. Leave blank to keep the existing value.'),
+    ];
+
+    $form['entra']['entra_scope'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Scope'),
+      '#description' => $this->t('The OAuth2 scope to request. Typically <code>api://&lt;api-client-id&gt;/.default</code>. Leave blank to auto-derive from the API base URL.'),
+      '#default_value' => $config->get('entra_scope'),
     ];
 
     // --- Authority ---
@@ -200,16 +257,32 @@ class SettingsForm extends ConfigFormBase {
       $enabled_services[$key] = (bool) $form_state->getValue('service_' . $key);
     }
 
-    $this->config('localgov_localisation.settings')
+    // Only update client secret if a new value was entered.
+    $client_secret = $form_state->getValue('entra_client_secret');
+    $config = $this->config('localgov_localisation.settings');
+
+    $config
       ->set('api_base_url', $form_state->getValue('api_base_url'))
+      ->set('auth_method', $form_state->getValue('auth_method'))
       ->set('api_key', $form_state->getValue('api_key'))
+      ->set('entra_tenant_id', $form_state->getValue('entra_tenant_id'))
+      ->set('entra_client_id', $form_state->getValue('entra_client_id'))
+      ->set('entra_scope', $form_state->getValue('entra_scope'))
       ->set('authority_source', $form_state->getValue('authority_source'))
       ->set('address_source', $form_state->getValue('address_source'))
       ->set('cache_lifetime', $form_state->getValue('cache_lifetime'))
       ->set('default_radius_events', $form_state->getValue('default_radius_events'))
       ->set('default_radius_planning', $form_state->getValue('default_radius_planning'))
-      ->set('enabled_services', $enabled_services)
-      ->save();
+      ->set('enabled_services', $enabled_services);
+
+    // Only overwrite the secret if user entered a new one.
+    if (!empty($client_secret)) {
+      $config->set('entra_client_secret', $client_secret);
+      // Invalidate cached token when credentials change.
+      \Drupal::cache()->delete('localgov_localisation:entra_token');
+    }
+
+    $config->save();
 
     parent::submitForm($form, $form_state);
   }

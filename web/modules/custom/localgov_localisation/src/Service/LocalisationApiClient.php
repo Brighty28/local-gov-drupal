@@ -24,6 +24,16 @@ class LocalisationApiClient {
   protected $logger;
   protected CacheBackendInterface $cache;
 
+  /**
+   * In-memory cache for the Entra ID access token within a single request.
+   */
+  protected ?string $accessToken = NULL;
+
+  /**
+   * Timestamp when the in-memory token expires.
+   */
+  protected int $tokenExpires = 0;
+
   public function __construct(
     ClientInterface $http_client,
     ConfigFactoryInterface $config_factory,
@@ -44,12 +54,100 @@ class LocalisationApiClient {
     return [
       'base_url' => rtrim($config->get('api_base_url') ?? '', '/'),
       'api_key' => $config->get('api_key') ?? '',
+      'auth_method' => $config->get('auth_method') ?? 'api_key',
+      'entra_tenant_id' => $config->get('entra_tenant_id') ?? '',
+      'entra_client_id' => $config->get('entra_client_id') ?? '',
+      'entra_client_secret' => $config->get('entra_client_secret') ?? '',
+      'entra_scope' => $config->get('entra_scope') ?? '',
       'cache_lifetime' => $config->get('cache_lifetime') ?? 3600,
       'address_source' => $config->get('address_source') ?? 'Alloy',
       'authority_source' => $config->get('authority_source') ?? 'SCDC',
       'default_radius_events' => $config->get('default_radius_events') ?? 5,
       'default_radius_planning' => $config->get('default_radius_planning') ?? 2,
     ];
+  }
+
+  /**
+   * Acquires an OAuth2 access token from Microsoft Entra ID.
+   *
+   * Uses the Client Credentials flow (application-to-application).
+   * Tokens are cached in Drupal's cache and in-memory for the request lifetime.
+   *
+   * @return string|null
+   *   The bearer token, or NULL on failure.
+   */
+  protected function getEntraToken(): ?string {
+    // Check in-memory cache first.
+    if ($this->accessToken && time() < $this->tokenExpires) {
+      return $this->accessToken;
+    }
+
+    // Check Drupal cache.
+    $cached = $this->cache->get('localgov_localisation:entra_token');
+    if ($cached && !empty($cached->data['access_token']) && time() < ($cached->data['expires'] ?? 0)) {
+      $this->accessToken = $cached->data['access_token'];
+      $this->tokenExpires = $cached->data['expires'];
+      return $this->accessToken;
+    }
+
+    $config = $this->getConfig();
+    $tenant_id = $config['entra_tenant_id'];
+    $client_id = $config['entra_client_id'];
+    $client_secret = $config['entra_client_secret'];
+    $scope = $config['entra_scope'];
+
+    if (empty($tenant_id) || empty($client_id) || empty($client_secret)) {
+      $this->logger->error('Entra ID authentication is configured but tenant ID, client ID, or client secret is missing.');
+      return NULL;
+    }
+
+    // Default scope to the API's .default if not specified.
+    if (empty($scope)) {
+      $scope = $config['base_url'] . '/.default';
+    }
+
+    $token_url = 'https://login.microsoftonline.com/' . $tenant_id . '/oauth2/v2.0/token';
+
+    try {
+      $response = $this->httpClient->request('POST', $token_url, [
+        'form_params' => [
+          'grant_type' => 'client_credentials',
+          'client_id' => $client_id,
+          'client_secret' => $client_secret,
+          'scope' => $scope,
+        ],
+        'timeout' => 10,
+      ]);
+
+      $data = json_decode($response->getBody()->getContents(), TRUE);
+
+      if (!empty($data['access_token'])) {
+        // Cache the token. Subtract 60 seconds as a safety margin.
+        $expires_in = ($data['expires_in'] ?? 3600) - 60;
+        $expires_at = time() + $expires_in;
+
+        $this->accessToken = $data['access_token'];
+        $this->tokenExpires = $expires_at;
+
+        $this->cache->set('localgov_localisation:entra_token', [
+          'access_token' => $data['access_token'],
+          'expires' => $expires_at,
+        ], $expires_at);
+
+        return $this->accessToken;
+      }
+
+      $this->logger->error('Entra ID token response did not contain an access_token. Response: @response', [
+        '@response' => json_encode($data),
+      ]);
+      return NULL;
+    }
+    catch (GuzzleException $e) {
+      $this->logger->error('Failed to acquire Entra ID token: @message', [
+        '@message' => $e->getMessage(),
+      ]);
+      return NULL;
+    }
   }
 
   /**
@@ -81,7 +179,20 @@ class LocalisationApiClient {
       'timeout' => 15,
     ];
 
-    if (!empty($config['api_key'])) {
+    // Authenticate based on configured method.
+    if ($config['auth_method'] === 'entra_id') {
+      $token = $this->getEntraToken();
+      if ($token) {
+        $options['headers']['Authorization'] = 'Bearer ' . $token;
+      }
+      else {
+        $this->logger->error('Cannot make API request to @endpoint: Entra ID token acquisition failed.', [
+          '@endpoint' => $endpoint,
+        ]);
+        return NULL;
+      }
+    }
+    elseif (!empty($config['api_key'])) {
       $options['headers']['X-Api-Key'] = $config['api_key'];
     }
 
