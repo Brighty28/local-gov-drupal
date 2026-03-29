@@ -16,15 +16,17 @@ class SettingsForm extends ConfigFormBase {
 
   public function __construct(
     \Drupal\Core\Config\ConfigFactoryInterface $config_factory,
+    \Drupal\Core\Config\TypedConfigManagerInterface $typed_config_manager,
     LocalisationApiClient $api_client,
   ) {
-    parent::__construct($config_factory);
+    parent::__construct($config_factory, $typed_config_manager);
     $this->apiClient = $api_client;
   }
 
   public static function create(ContainerInterface $container): static {
     return new static(
       $container->get('config.factory'),
+      $container->get('config.typed'),
       $container->get('localgov_localisation.api_client'),
     );
   }
