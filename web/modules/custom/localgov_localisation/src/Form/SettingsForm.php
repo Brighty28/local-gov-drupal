@@ -4,11 +4,30 @@ namespace Drupal\localgov_localisation\Form;
 
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\localgov_localisation\Service\LocalisationApiClient;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Configuration form for LocalGov Localisation settings.
  */
 class SettingsForm extends ConfigFormBase {
+
+  protected LocalisationApiClient $apiClient;
+
+  public function __construct(
+    \Drupal\Core\Config\ConfigFactoryInterface $config_factory,
+    LocalisationApiClient $api_client,
+  ) {
+    parent::__construct($config_factory);
+    $this->apiClient = $api_client;
+  }
+
+  public static function create(ContainerInterface $container): static {
+    return new static(
+      $container->get('config.factory'),
+      $container->get('localgov_localisation.api_client'),
+    );
+  }
 
   /**
    * {@inheritdoc}
@@ -240,7 +259,38 @@ class SettingsForm extends ConfigFormBase {
       ];
     }
 
+    // --- Connection Test ---
+    $form['test'] = [
+      '#type' => 'details',
+      '#title' => $this->t('Connection Test'),
+      '#open' => FALSE,
+    ];
+
+    $form['test']['test_connection'] = [
+      '#type' => 'submit',
+      '#value' => $this->t('Test Connection'),
+      '#submit' => ['::testConnection'],
+      '#limit_validation_errors' => [],
+      '#weight' => 100,
+    ];
+
     return parent::buildForm($form, $form_state);
+  }
+
+  /**
+   * Form submit handler for the "Test Connection" button.
+   */
+  public function testConnection(array &$form, FormStateInterface $form_state): void {
+    $result = $this->apiClient->testConnection();
+
+    if ($result['success']) {
+      $this->messenger()->addStatus($result['message']);
+    }
+    else {
+      $this->messenger()->addError($result['message']);
+    }
+
+    $form_state->setRebuild();
   }
 
   /**

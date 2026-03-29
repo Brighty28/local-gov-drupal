@@ -207,9 +207,19 @@ class LocalisationApiClient {
       return $data;
     }
     catch (GuzzleException $e) {
-      $this->logger->error('Localisation API request failed for @endpoint: @message', [
+      $status_code = method_exists($e, 'getResponse') && $e->getResponse()
+        ? $e->getResponse()->getStatusCode()
+        : 0;
+      $response_body = '';
+      if (method_exists($e, 'getResponse') && $e->getResponse()) {
+        $response_body = $e->getResponse()->getBody()->getContents();
+      }
+
+      $this->logger->error('Localisation API request failed for @endpoint (HTTP @code): @message | Response: @body', [
         '@endpoint' => $endpoint,
+        '@code' => $status_code,
         '@message' => $e->getMessage(),
+        '@body' => $response_body,
       ]);
       return NULL;
     }
@@ -544,6 +554,60 @@ class LocalisationApiClient {
       $query['reference'] = $reference;
     }
     return $this->get('/api/v1/PlanningConstraints/Get-Flood-Zone/' . urlencode($postcode), $query);
+  }
+
+  // ---------------------------------------------------------------------------
+  // Connection Test
+  // ---------------------------------------------------------------------------
+
+  /**
+   * Tests the API connection and authentication.
+   *
+   * @return array
+   *   Status array with 'success', 'message', and optional 'details'.
+   */
+  public function testConnection(): array {
+    $config = $this->getConfig();
+
+    if (empty($config['base_url'])) {
+      return [
+        'success' => FALSE,
+        'message' => 'API base URL is not configured.',
+      ];
+    }
+
+    // For Entra ID, first verify we can get a token.
+    if ($config['auth_method'] === 'entra_id') {
+      if (empty($config['entra_tenant_id']) || empty($config['entra_client_id']) || empty($config['entra_client_secret'])) {
+        return [
+          'success' => FALSE,
+          'message' => 'Entra ID credentials are incomplete. Please fill in Tenant ID, Client ID, and Client Secret.',
+        ];
+      }
+
+      $token = $this->getEntraToken();
+      if (!$token) {
+        return [
+          'success' => FALSE,
+          'message' => 'Failed to acquire Entra ID access token. Check your Tenant ID, Client ID, Client Secret, and Scope. See the Drupal log for details.',
+        ];
+      }
+    }
+
+    // Try a simple geocode call as a connectivity test.
+    $test_data = $this->geocode('CB23 4JG');
+    if ($test_data !== NULL) {
+      return [
+        'success' => TRUE,
+        'message' => 'Connection successful. API is responding and authentication is working.',
+        'details' => $test_data,
+      ];
+    }
+
+    return [
+      'success' => FALSE,
+      'message' => 'API request failed. Check the Drupal log (/admin/reports/dblog) for detailed error information.',
+    ];
   }
 
 }
